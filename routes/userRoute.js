@@ -11,6 +11,7 @@ user.post("/signup", async (req, res) =>
     {
         const user = req.body;
         await addUserData(user) ;
+        return res.status(200).json({message: "User Signed up successfully"}) ;
     }) ;
 
 user.post("/login", async (req, res) => {

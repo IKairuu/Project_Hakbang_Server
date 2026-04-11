@@ -53,3 +53,15 @@ export async function getUserData(user_data)
     }
     return null ;
 }
+
+export async function getColleges()
+{
+    let colleges = [] ;
+    const querySnapshot = await getDocs(collection(database, "college"));
+    for (const doc of querySnapshot.docs)
+    {
+        let college = doc.data() ;
+        colleges.push(college) ;
+    }
+    return colleges ;
+}
