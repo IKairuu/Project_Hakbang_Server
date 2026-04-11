@@ -40,10 +40,16 @@ export async function addUserData(user)
     }
 }
 
-export async function getUserData(user)
+export async function getUserData(user_data)
 {
     const querySnapshot = await getDocs(collection(database, "users"));
-    querySnapshot.forEach((doc) => {
-    console.log(`${doc.id} => ${doc.data().name}`);
-});
+    for (const doc of querySnapshot.docs)
+    {
+        let user = doc.data() ;
+        if (user_data.email == user.email && user_data.password == user.password)
+        {
+            return user ;
+        }
+    }
+    return null ;
 }
