@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 import * as dotenv from "dotenv" ;
 dotenv.config() ;
 
@@ -40,3 +40,10 @@ export async function addUserData(user)
     }
 }
 
+export async function getUserData(user)
+{
+    const querySnapshot = await getDocs(collection(database, "users"));
+    querySnapshot.forEach((doc) => {
+    console.log(`${doc.id} => ${doc.data().name}`);
+});
+}
