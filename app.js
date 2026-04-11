@@ -1,4 +1,6 @@
 import express from "express" ;
+import * as dotenv from "dotenv" ;
+dotenv.config() ;
 
 const app = express() ;
 const port = 5050 ;
@@ -9,6 +11,7 @@ app.use("/user", user) ;
 
 app.get("/", (req, res) => {
     console.log("API is running") ;
+    console.log(process.env.API_KEY) ;
 }) ;
 
 app.listen(port, function() {console.log(`Listening to http://localhost:${port}`)}); 
