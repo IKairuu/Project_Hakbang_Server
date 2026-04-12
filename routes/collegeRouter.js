@@ -4,7 +4,7 @@ import { getColleges } from "../database/database.js";
 
 const collegeRouter = express.Router() ;
 
-collegeRouter.get("/auth/available-colleges", authentication, async (req, res) => {
+collegeRouter.get("/available-colleges", authentication, async (req, res) => {
     let colleges = await getColleges() ;
     if (!colleges)
         return res.status(501).json({message:"Colleges not found"}) ;
