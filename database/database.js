@@ -29,7 +29,8 @@ export async function addUserData(user)
             avatar: user.avatar,
             occupation: user.occupation,
             school: user.school,
-            institution: user.institution
+            institution: user.institution,
+            grade: user.grade
         }) ;
         console.log(`Document written with: ${doc_data.id}`) ;
     }
