@@ -28,7 +28,6 @@ export async function addUserData(user)
             password: user.password,
             avatar: user.avatar,
             occupation: user.occupation,
-            school: user.school,
             institution: user.institution,
             grade: user.grade
         }) ;
