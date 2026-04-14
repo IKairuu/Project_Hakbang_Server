@@ -7,10 +7,9 @@ dotenv.config() ;
 
 const user = express.Router() ;
 
-user.post("/signup", express.json(), async (req, res) => 
+user.post("/signup", async (req, res) => 
     {
         const user = req.body;
-        console.log(user) ;
         await addUserData(user) ;
         return res.status(200).json({message: "User Signed up successfully"}) ;
     }) ;
