@@ -39,7 +39,8 @@ chat.get("/message", async (req, res) => {
     }
     catch(error)
     {
-        return res.status(502).json({message:`${error}`}) ;
+        console.log(error) ;
+        return res.status(502).json({message:`Chat Server error`}) ;
     }
 
     return  ;
