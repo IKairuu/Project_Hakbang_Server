@@ -1,5 +1,5 @@
 import express from "express" ;
-import { getScholarships } from "../database/database";
+import { getScholarships } from "../database/database.js";
 
 const scholar = express.Router() ;
 
@@ -12,4 +12,4 @@ scholar.get("/active-scholarships", async (req, res) =>
     return res.status(200).json({message: "Scholarhips loaded successfully", data: active_scholarships}) ;
 }) ;
 
-export default scholar
+export default scholar ;
