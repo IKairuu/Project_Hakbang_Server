@@ -7,11 +7,13 @@ const port = process.env.PORT || 5050 ;
 import user from "./routes/userRoute.js" ;
 import college from "./routes/collegeRouter.js" ;
 import chat from "./routes/chatRouter.js" ;
+import scholar from "./routes/scholarRouter.js" ;
 
 app.use(express.json()) ;
 app.use("/user", user) ;
 app.use("/college", college) ;
 app.use("/chat", chat) ;
+app.use("/scholarship", scholar) ;
 
 app.get("/", (req, res) => {
     console.log("API is running") ;

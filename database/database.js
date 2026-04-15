@@ -65,3 +65,15 @@ export async function getColleges()
     }
     return colleges ;
 }
+
+export async function getScholarships()
+{
+    let scholarships = [] ;
+    const querySnapshot = await getDocs(collection(database, "scholarship"));
+    for (const doc of querySnapshot.docs)
+    {
+        let scholar = doc.data() ;
+        scholarships.push(scholar) ;
+    }
+    return scholarships ;
+}
