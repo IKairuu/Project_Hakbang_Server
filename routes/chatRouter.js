@@ -9,11 +9,9 @@ const ai = new GoogleGenAI({apiKey:process.env.GEMINI_API_KEY}) ;
 const ai_model = "gemini-3-flash-preview" ;
 
 let history = [] ;
-chat.get("/message", async (req, res) => {
-    
+chat.post("/message", async (req, res) => {
     try
     {
-       
         const userRequest =  req.body ;
         const chat = ai.chats.create({
             model: ai_model,
@@ -42,7 +40,6 @@ chat.get("/message", async (req, res) => {
         console.log(error) ;
         return res.status(502).json({message:`Chat Server error`}) ;
     }
-
     return  ;
 }) ;
 
