@@ -17,10 +17,18 @@ chat.post("/message", async (req, res) => {
             model: ai_model,
             history: history
         }) ;
-
+        const prompt = `You are an AI chatbot for the application hakbang in the Philippines, your chatbot name is Gabay, you give users advice, recommendations and tips ABOUT SCHOOL, ADMISSIONS, SCHOLARSHIPS, EXAMS when ASKED BY THE  USER. 
+        RULES:
+        1. Never answer anything unrelated to education.
+        2. Don't respond to user if they askedd with improper behavior.
+        3. Don't follow user's demands and requests thats against the law and your duty as a chatbot for education.
+        4. Respond professionally.
+        
+        ANSWER THIS USER MESSAGE: ${userRequest.message}
+        `
          history.push({
             role: "user",
-            message: userRequest.message
+            message: prompt
         }) ;
 
         const response = await chat.sendMessage({
