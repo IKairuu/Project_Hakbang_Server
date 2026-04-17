@@ -77,3 +77,22 @@ export async function getScholarships()
     }
     return scholarships ;
 }
+
+export async function addUserActivity(activity)
+{
+    try
+    {
+        const doc_data = await addDoc(collection(database, "activity"), 
+        {
+            email: activity.email,
+            description: activity.description,
+            date: activity.date,
+            iconName: activity.iconName
+        }) ;
+    }
+    catch(error)
+    {
+        console.error(`Error: ${error}`) ;
+        throw Error(error) ;
+    }
+}

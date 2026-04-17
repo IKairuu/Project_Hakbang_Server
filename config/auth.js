@@ -5,7 +5,6 @@ dotenv.config() ;
 
 export function authentication(req, res, next) {
         const header = req.headers.authorization ;
-        console.log(header) ;
         if (!header)
         {
             return res.status(401).json({message: "There is no token"}) ;
