@@ -1,7 +1,7 @@
 import express from "express" ;
 import { GoogleGenAI } from "@google/genai";
 import * as dotenv from "dotenv" ;
-import { authentication } from "../config/auth";
+import { authentication } from "../config/auth.js";
 dotenv.config() ;
 
 const chat = express.Router() ;
@@ -14,7 +14,7 @@ chat.post("/auth/message", authentication,async (req, res) => {
     try
     {
         const userRequest =  req.body ;
-        const chat = ai.chats.create({
+        const aiChat = ai.chats.create({
             model: ai_model,
             history: history
         }) ;
@@ -41,7 +41,7 @@ chat.post("/auth/message", authentication,async (req, res) => {
             message: prompt
         }) ;
 
-        const response = await chat.sendMessage({
+        const response = await aiChat.sendMessage({
             message: userRequest.message
         }) ;
 
