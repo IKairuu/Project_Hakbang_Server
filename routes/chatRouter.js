@@ -14,7 +14,7 @@ chat.post("/auth/message", authentication,async (req, res) => {
     try
     {
         const userRequest =  req.body ;
-        const aiChat = ai.chats.create({
+        const aiConfig = ai.chats.create({
             model: ai_model,
             history: history
         }) ;
@@ -41,8 +41,8 @@ chat.post("/auth/message", authentication,async (req, res) => {
             message: prompt
         }) ;
 
-        const response = await aiChat.sendMessage({
-            message: userRequest.message
+        const response = await aiConfig.sendMessage({
+            message: prompt
         }) ;
 
         history.push({
