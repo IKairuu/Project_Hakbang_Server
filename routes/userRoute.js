@@ -20,7 +20,7 @@ user.post("/login", async (req, res) => {
         return res.status(401).json({message:"Invalid Username or password", "status": 401}) ;
 
     let accessToken = jwt.sign({data: user_data}, process.env.JWT_SECRET_KEY) ;
-    return res.status(200).json({message: "User Successfully logged in", token: accessToken, "status": 200, "data": user_data}) ;
+    return res.status(200).json({message: "Successfully logged in", token: accessToken, "status": 200, "data": user_data}) ;
 }) ;
 
 //FOR TESTING PURPOSES

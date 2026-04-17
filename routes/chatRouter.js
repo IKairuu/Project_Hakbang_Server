@@ -1,6 +1,7 @@
 import express from "express" ;
 import { GoogleGenAI } from "@google/genai";
 import * as dotenv from "dotenv" ;
+import { authentication } from "../config/auth";
 dotenv.config() ;
 
 const chat = express.Router() ;
@@ -9,7 +10,7 @@ const ai = new GoogleGenAI({apiKey:process.env.GEMINI_API_KEY}) ;
 const ai_model = "gemini-2.5-flash" ;
 
 let history = [] ;
-chat.post("/message", async (req, res) => {
+chat.post("auth/message", authentication,async (req, res) => {
     try
     {
         const userRequest =  req.body ;
