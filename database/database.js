@@ -96,3 +96,18 @@ export async function addUserActivity(activity)
         throw Error(error) ;
     }
 }
+
+export async function getUserActivities(user_email)
+{
+    let activities = [] ;
+    const querySnapshot = await getDocs(collection(database, "activity"));
+    for (const doc of querySnapshot.docs)
+    {
+        let act = doc.data() ;
+        if (act.email == user_email.email)
+        {
+            activities.push(act) ;
+        }
+    }
+    return activities ;
+}

@@ -1,5 +1,5 @@
 import express from "express";
-import {addUserActivity, addUserData, getUserData} from "../database/database.js";
+import {addUserActivity, addUserData, getUserActivities, getUserData} from "../database/database.js";
 import {authentication} from "../config/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
@@ -37,6 +37,19 @@ user.post("/auth/post-activity", authentication, async (req, res) => {
     {
         await addUserActivity(activity) ;
         return res.status(200).json({message: "Operation Successfull"}) ;
+    }
+    catch (error)
+    {
+        return res.status(500).json({message: "Server error"}) ;
+    }
+}) ;
+
+user.post("/auth/get-activities", authentication, async (req, res) => {
+    const user_email =  req.body ;
+    try
+    {
+        let activities =  await getUserActivities(user_email) ;
+        return res.status(200).json({message: "Operation Successfull", "data" : activities}) ;
     }
     catch (error)
     {
