@@ -10,7 +10,7 @@ const ai = new GoogleGenAI({apiKey:process.env.GEMINI_API_KEY}) ;
 const ai_model = "gemini-2.5-flash" ;
 
 let history = [] ;
-chat.post("auth/message", authentication,async (req, res) => {
+chat.post("/auth/message", authentication,async (req, res) => {
     try
     {
         const userRequest =  req.body ;
