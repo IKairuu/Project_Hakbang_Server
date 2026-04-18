@@ -71,8 +71,18 @@ user.post("/auth/get-saved-schools", authentication, async (req, res) => {
     }
 }) ;
 
-user.post("/auth/post-saved-schools", authentication, (req, res) => {
-
+user.post("/auth/post-saved-schools", authentication, async (req, res) => {
+    let user_data = req.body ;
+    try
+    {
+        const schools = await saveSchool(user_data) ;
+        res.status(200).json({message:"School Saved Successfully"}) ;
+    }
+    catch (error)
+    {
+        console.log(error) ;
+        return res.status(500).json({message: "Server error"}) ;
+    }
 }) ;
 
 //FOR TESTING PURPOSES
