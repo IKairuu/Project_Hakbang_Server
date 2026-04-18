@@ -135,7 +135,7 @@ export async function getSavedSchool(user_email)
     let schools = []
     const querySnapshot = await getDocs(collection(database, "saved_schools")) ;
 
-    for (const doc in querySnapshot.docs)
+    for (const doc of querySnapshot.docs)
     {
         let saved = doc.data() ;
         if (user_email == saved.email)

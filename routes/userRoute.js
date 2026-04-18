@@ -1,5 +1,5 @@
 import express from "express";
-import {addUserActivity, addUserData, getUserActivities, getUserData} from "../database/database.js";
+import {addUserActivity, addUserData, getUserActivities, getUserData, saveSchool, getSavedSchool} from "../database/database.js";
 import {authentication} from "../config/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
@@ -57,8 +57,18 @@ user.post("/auth/get-activities", authentication, async (req, res) => {
     }
 }) ;
 
-user.get("/auth/get-saved-schools", authentication, (req, res) => {
-
+user.post("/auth/get-saved-schools", authentication, async (req, res) => {
+    let user_data = req.body ;
+    try
+    {
+        const schools = await getSavedSchool(user_data.email) ;
+        res.status(200).json({message:"Saved Schools retrieved successfully", data: schools}) ;
+    }
+    catch (error)
+    {
+        console.log(error) ;
+        return res.status(500).json({message: "Server error"}) ;
+    }
 }) ;
 
 user.post("/auth/post-saved-schools", authentication, (req, res) => {
