@@ -1,5 +1,5 @@
 import express from "express";
-import {addUserActivity, addUserData, getUserActivities, getUserData, saveSchool, getSavedSchool, removeSavedSchool} from "../database/database.js";
+import {addUserActivity, addUserData, getUserActivities, getUserData, saveSchool, getSavedSchool, removeSavedSchool, removeUserActivity} from "../database/database.js";
 import {authentication} from "../config/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
@@ -55,6 +55,20 @@ user.post("/auth/get-activities", authentication, async (req, res) => {
     {
         return res.status(500).json({message: "Server error", status:500}) ;
     }
+}) ;
+
+user.post("/auth/remove-activities", authentication, async (req, res) => {
+    const email = req.body.email ;
+    try
+    {
+        await removeUserActivity(email) ;
+        return res.status(200).json({message: "Activity Deletion Successfull"}) ;
+    }
+    catch (error)
+    {
+        return res.status(500).json({message: "Server error", status:500}) ;
+    }
+
 }) ;
 
 user.post("/auth/get-saved-schools", authentication, async (req, res) => {

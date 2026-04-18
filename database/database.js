@@ -112,6 +112,20 @@ export async function getUserActivities(user_email)
     return activities ;
 }
 
+export async function removeUserActivity(user_email)
+{
+    const querySnapshot = await getDocs(collection(database, "activity")) ;
+    for (const documents of querySnapshot.docs)
+    {
+        let document_id = documents.id ;
+        let acts = documents.data() ;
+        if (user_email == acts.email)
+        {
+            await deleteDoc(doc(database, "activity", document_id));
+        }
+    }
+}
+
 export async function saveSchool(schoolData) 
 {
     try
