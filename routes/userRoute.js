@@ -25,10 +25,10 @@ user.post("/signup", async (req, res) =>
 user.post("/login", async (req, res) => {
     let user_data = await getUserData(req.body) ;
     if (user_data == null)
-        return res.status(401).json({message:"Invalid Username or password", "status": 401}) ;
+        return res.status(401).json({message:"Invalid Username or password", status: 401}) ;
 
     let accessToken = jwt.sign({data: user_data}, process.env.JWT_SECRET_KEY) ;
-    return res.status(200).json({message: "Successfully logged in", token: accessToken, "status": 200, "data": user_data}) ;
+    return res.status(200).json({message: "Successfully logged in", token: accessToken, status: 200, data: user_data}) ;
 }) ;
 
 user.post("/auth/post-activity", authentication, async (req, res) => {
@@ -49,11 +49,11 @@ user.post("/auth/get-activities", authentication, async (req, res) => {
     try
     {
         let activities =  await getUserActivities(user_email) ;
-        return res.status(200).json({message: "Operation Successfull", "data" : activities}) ;
+        return res.status(200).json({message: "Operation Successfull", data : activities, status : 200}) ;
     }
     catch (error)
     {
-        return res.status(500).json({message: "Server error"}) ;
+        return res.status(500).json({message: "Server error", status:500}) ;
     }
 }) ;
 
@@ -62,12 +62,12 @@ user.post("/auth/get-saved-schools", authentication, async (req, res) => {
     try
     {
         const schools = await getSavedSchool(user_data.email) ;
-        res.status(200).json({message:"Saved Schools retrieved successfully", data: schools}) ;
+        res.status(200).json({message:"Saved Schools retrieved successfully", data: schools, status: 200}) ;
     }
     catch (error)
     {
         console.log(error) ;
-        return res.status(500).json({message: "Server error"}) ;
+        return res.status(500).json({message: "Server error", status: 500}) ;
     }
 }) ;
 
