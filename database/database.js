@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
 import * as dotenv from "dotenv" ;
 dotenv.config() ;
 
@@ -144,4 +144,18 @@ export async function getSavedSchool(user_email)
         }
     }
     return schools ;
+}
+
+export async function removeSavedSchool(schoolData)
+{
+    const querySnapshot = await getDocs(collection(database, "saved_schools")) ;
+    for (const documents of querySnapshot.docs)
+    {
+        let document_id = documents.id ;
+        let saved = documents.data() ;
+        if (schoolData.email == saved.email && schoolData.college_name == saved.college_name)
+        {
+            await deleteDoc(doc(database, "saved_schools", document_id));
+        }
+    }
 }
