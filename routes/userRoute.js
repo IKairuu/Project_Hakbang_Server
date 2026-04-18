@@ -57,6 +57,14 @@ user.post("/auth/get-activities", authentication, async (req, res) => {
     }
 }) ;
 
+user.get("/auth/get-saved-schools", authentication, (req, res) => {
+
+}) ;
+
+user.post("/auth/post-saved-schools", authentication, (req, res) => {
+
+}) ;
+
 //FOR TESTING PURPOSES
 user.get("/auth/test-message",authentication,(req, res) => {
     return res.status(200).json({message:"Successful authentication"}) ;

@@ -111,3 +111,37 @@ export async function getUserActivities(user_email)
     }
     return activities ;
 }
+
+export async function saveSchool(schoolData) 
+{
+    try
+    {
+        const doc_data = await addDoc(collection(database, "saved_schools"),
+        {
+            college_name: schoolData.college_name,
+            email: schoolData.email
+        }) ;
+
+    }
+    catch (error)
+    {
+        console.error(`Error: ${error}`) ;
+        throw Error(error) ;
+    }
+}
+
+export async function getSavedSchool(user_email)
+{
+    let schools = []
+    const querySnapshot = await getDocs(collection(database, "saved_schools")) ;
+
+    for (const doc in querySnapshot.docs)
+    {
+        let saved = doc.data() ;
+        if (user_email == saved.email)
+        {
+            schools.push(saved) ;
+        }
+    }
+    return schools ;
+}
