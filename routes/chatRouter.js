@@ -7,7 +7,7 @@ dotenv.config() ;
 const chat = express.Router() ;
 
 const ai = new GoogleGenAI({apiKey:process.env.GEMINI_API_KEY}) ;
-const ai_model = "gemini-3-flash-preview" ;
+const ai_model = "	gemini-2.0-flash-live-preview-04-09" ;
 
 let history = [] ;
 chat.post("/auth/message", authentication,async (req, res) => {
