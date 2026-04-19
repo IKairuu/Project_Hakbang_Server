@@ -50,7 +50,7 @@ chat.post("/auth/message", authentication,async (req, res) => {
     catch(error)
     {
         console.log(error) ;
-        return res.status(502).json({message:`Chat Server error`}) ;
+        return res.status(502).json({message:`Chat Server error ${error}`}) ;
     }
     return  ;
 }) ;
