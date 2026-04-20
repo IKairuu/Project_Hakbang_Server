@@ -1,5 +1,5 @@
 import express from "express";
-import {addUserActivity, addUserData, getUserActivities, getUserData, saveSchool, getSavedSchool, removeSavedSchool, removeUserActivity} from "../database/database.js";
+import {addUserActivity, addUserData, getUserActivities, getUserData, saveSchool, getSavedSchool, removeSavedSchool, removeUserActivity, userLogin} from "../database/database.js";
 import {authentication} from "../config/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
@@ -23,12 +23,28 @@ user.post("/signup", async (req, res) =>
     }) ;
 
 user.post("/login", async (req, res) => {
-    let user_data = await getUserData(req.body) ;
-    if (user_data == null)
+    let user_email = await userLogin(req.body) ;
+    if (user_email == null)
         return res.status(401).json({message:"Invalid Username or password", status: 401}) ;
 
-    let accessToken = jwt.sign({data: user_data}, process.env.JWT_SECRET_KEY) ;
-    return res.status(200).json({message: "Successfully logged in", token: accessToken, status: 200, data: user_data}) ;
+    let accessToken = jwt.sign({data: user_email}, process.env.JWT_SECRET_KEY) ;
+    return res.status(200).json({message: "Successfully logged in", token: accessToken, status: 200, data: user_email}) ;
+}) ;
+
+user.get("/auth/:email/get-user-data", authentication, async (req, res) => {
+    const user_email = req.params.email ;
+    try
+    {
+        let user_data = await getUserData(user_email) ;
+        if (user_data == null)  return res.status(401).json({message:"Error retrieving data", status: 402}) ; 
+
+        return res.status(200).json({message:"Successfully retrieved data", status: 200, data: user_data}) ;
+    }
+    catch (error)
+    {
+        return res.status(500).json({message: "Server error"}) ; 
+    }
+    
 }) ;
 
 user.post("/auth/post-activity", authentication, async (req, res) => {

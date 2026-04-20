@@ -31,7 +31,6 @@ export async function addUserData(user)
             institution: user.institution,
             grade: user.grade
         }) ;
-        console.log(`Document written with: ${doc_data.id}`) ;
     }
     catch(error)
     {
@@ -40,7 +39,7 @@ export async function addUserData(user)
     }
 }
 
-export async function getUserData(user_data)
+export async function userLogin(user_data)
 {
     const querySnapshot = await getDocs(collection(database, "users"));
     for (const doc of querySnapshot.docs)
@@ -48,7 +47,21 @@ export async function getUserData(user_data)
         let user = doc.data() ;
         if (user_data.email == user.email && user_data.password == user.password)
         {
-            return user ;
+            return user.email;
+        }
+    }
+    return null ;
+}
+
+export async function getUserData(user_email)
+{
+    const querySnapshot = await getDocs(collection(database, "users"));
+    for (const doc of querySnapshot.docs)
+    {
+        let user_data = doc.data() ;
+        if (user_email == user_data.email)
+        {
+            return user_data ;
         }
     }
     return null ;
