@@ -190,7 +190,7 @@ export async function removeSavedSchool(schoolData)
 export async function getHubs()
 {
     let hubs = [] ;
-    const querySnapshot = await getDocs(collection(database, "review_center")) ;
+    const querySnapshot = await getDocs(collection(database, "review_centers")) ;
     for (const docs of querySnapshot.docs)
     {
         let available_hubs = docs.data() ;
