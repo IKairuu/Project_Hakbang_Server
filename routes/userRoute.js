@@ -106,11 +106,11 @@ user.post("/auth/post-saved-schools", authentication, async (req, res) => {
     try
     {
         const schools = await saveSchool(user_data) ;
-        res.status(200).json({message:"School Saved Successfully"}) ;
+        res.status(200).json({message:"School Saved Successfully", status: 200}) ;
     }
     catch (error)
     {
-        return res.status(500).json({message: "Server error"}) ;
+        return res.status(500).json({message: "Server error", status: 500}) ;
     }
 }) ;
 
@@ -120,9 +120,9 @@ user.post("/auth/remove-saved-school", authentication, async (req, res) => {
     {const server_response = await removeSavedSchool(school) ;}
     catch (error)
     {
-        return res.status(500).json({message: "Server error"}) ;
+        return res.status(500).json({message: "Server error", status: 500}) ;
     }
-    return res.status(200).json({message: "Delete Successfull"}) ;
+    return res.status(200).json({message: "Delete Successfull", status: 200}) ;
 }) ;
 
 //FOR TESTING PURPOSES
