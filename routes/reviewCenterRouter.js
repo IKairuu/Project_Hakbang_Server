@@ -13,7 +13,7 @@ center.get("/auth/get-review-centers", authentication, async (req, res) =>
     }
     catch (error)
     {
-        return res.status(503).json({message: "Error retrieving hubs"}) ;
+        return res.status(509).json({message: "Server Error: error retrieving hubs", status: 509}) ;
     }
     
 }) ;

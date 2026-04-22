@@ -8,9 +8,9 @@ scholar.get("/auth/active-scholarships", authentication,async (req, res) =>
 {
     let active_scholarships = await getScholarships() ;
     if (!active_scholarships)
-        return res.status(503).json({message:"Server Error: Scholarships not found"}) ;
+        return res.status(510).json({message:"Server Error: Scholarships not retrieved", status: 510}) ;
 
-    return res.status(200).json({message: "Scholarhips loaded successfully", data: active_scholarships}) ;
+    return res.status(200).json({message: "Scholarhips loaded successfully", data: active_scholarships, status: 200}) ;
 }) ;
 
 export default scholar ;

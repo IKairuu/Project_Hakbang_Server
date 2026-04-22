@@ -44,13 +44,13 @@ chat.post("/auth/message", authentication,async (req, res) => {
             message: response.text
         }) ;
 
-        return res.status(200).json({message: response.text  
+        return res.status(200).json({message: response.text, status: 200  
         })
     }
     catch(error)
     {
         console.log(error) ;
-        return res.status(502).json({message:`Chat Server error ${error}`}) ;
+        return res.status(512).json({message:`Chat Server error`, status: 512}) ;
     }
     return  ;
 }) ;

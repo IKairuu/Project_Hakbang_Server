@@ -13,11 +13,11 @@ user.post("/signup", async (req, res) =>
         try
         {
             await addUserData(user) ;
-            return res.status(200).json({message: "User Signed up successfully"}) ;
+            return res.status(200).json({message: "User Signed up successfully", status: 200}) ;
         }
         catch (error)
         {
-            return res.status(500).json({message: "Server error"}) ;
+            return res.status(501).json({message: "Server error: Sign up failed", status: 501}) ;
         }
         
     }) ;
@@ -36,13 +36,13 @@ user.get("/auth/:email/get-user-data", authentication, async (req, res) => {
     try
     {
         let user_data = await getUserData(user_email) ;
-        if (user_data == null)  return res.status(401).json({message:"Error retrieving data", status: 402}) ; 
+        if (user_data == null)  return res.status(402).json({message:"Error retrieving data", status: 402}) ; 
 
         return res.status(200).json({message:"Successfully retrieved data", status: 200, data: user_data}) ;
     }
     catch (error)
     {
-        return res.status(500).json({message: "Server error"}) ; 
+        return res.status(502).json({message: "Server error: Cannot retrieve user data", status: 502}) ; 
     }
     
 }) ;
@@ -52,11 +52,11 @@ user.post("/auth/post-activity", authentication, async (req, res) => {
     try 
     {
         await addUserActivity(activity) ;
-        return res.status(200).json({message: "Operation Successfull"}) ;
+        return res.status(200).json({message: "Operation Successfull", status:200}) ;
     }
     catch (error)
     {
-        return res.status(500).json({message: "Server error"}) ;
+        return res.status(503).json({message: "Server error: Cannot upload user activities", status: 503}) ;
     }
 }) ;
 
@@ -69,7 +69,7 @@ user.post("/auth/get-activities", authentication, async (req, res) => {
     }
     catch (error)
     {
-        return res.status(500).json({message: "Server error", status:500}) ;
+        return res.status(504).json({message: "Server error: Cannot retrieve user activities", status:504}) ;
     }
 }) ;
 
@@ -78,11 +78,11 @@ user.post("/auth/remove-activities", authentication, async (req, res) => {
     try
     {
         await removeUserActivity(email) ;
-        return res.status(200).json({message: "Activity Deletion Successfull"}) ;
+        return res.status(200).json({message: "Activity Deletion Successfull", status: 200}) ;
     }
     catch (error)
     {
-        return res.status(500).json({message: "Server error", status:500}) ;
+        return res.status(505).json({message: "Server error: Cannot remove activities", status:505}) ;
     }
 
 }) ;
@@ -97,7 +97,7 @@ user.post("/auth/get-saved-schools", authentication, async (req, res) => {
     catch (error)
     {
         console.log(error) ;
-        return res.status(500).json({message: "Server error", status: 500}) ;
+        return res.status(506).json({message: "Server error: Cannot retrieve saved schools", status: 506}) ;
     }
 }) ;
 
@@ -110,19 +110,22 @@ user.post("/auth/post-saved-schools", authentication, async (req, res) => {
     }
     catch (error)
     {
-        return res.status(500).json({message: "Server error", status: 500}) ;
+        return res.status(507).json({message: "Server error: Cannot upload saved schools", status: 507}) ;
     }
 }) ;
 
 user.post("/auth/remove-saved-school", authentication, async (req, res) => {
     const school = req.body ;
     try
-    {const server_response = await removeSavedSchool(school) ;}
+    {
+        const server_response = await removeSavedSchool(school) ;
+        return res.status(200).json({message: "Delete Successfull", status: 200}) ;
+    }
     catch (error)
     {
-        return res.status(500).json({message: "Server error", status: 500}) ;
+        return res.status(508).json({message: "Server error: Cannot remove saved school", status: 508}) ;
     }
-    return res.status(200).json({message: "Delete Successfull", status: 200}) ;
+    
 }) ;
 
 //FOR TESTING PURPOSES
