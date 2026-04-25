@@ -36,7 +36,7 @@ user.get("/auth/:email/get-user-data", authentication, async (req, res) => {
     try
     {
         let user_data = await getUserData(user_email) ;
-        if (user_data == null)  return res.status(402).json({message:"Error retrieving data", status: 402}) ; 
+        if (user_data == null)  return res.status(513).json({message:"Error retrieving data", status: 513}) ; 
 
         return res.status(200).json({message:"Successfully retrieved data", status: 200, data: user_data}) ;
     }
