@@ -49,8 +49,8 @@ chat.post("/auth/message", authentication,async (req, res) => {
     }
     catch(error)
     {
-        console.log(error) ;
-        return res.status(512).json({message:`Chat Server error`, status: 512}) ;
+        let jsonRes = JSON.parse(error["message"]) ;
+        return res.status(512).json({message:`Chat Server error: ${jsonRes["error"]["message"]}`, status: 512}) ;
     }
     return  ;
 }) ;
