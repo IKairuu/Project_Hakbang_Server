@@ -1,5 +1,5 @@
 import express from "express";
-import {addUserActivity, addUserData, getUserActivities, getUserData, saveSchool, getSavedSchool, removeSavedSchool, removeUserActivity, userLogin} from "../database/database.js";
+import {addUserActivity, addUserData, getUserActivities, getUserData, saveSchool, getSavedSchool, removeSavedSchool, removeUserActivity, userLogin, emailCheckDuplicate} from "../database/database.js";
 import {authentication} from "../config/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
@@ -12,8 +12,17 @@ user.post("/signup", async (req, res) =>
         const user = req.body;
         try
         {
-            await addUserData(user) ;
-            return res.status(200).json({message: "User Signed up successfully", status: 200}) ;
+            if (await emailCheckDuplicate(user["email"]))
+            {
+                return res.status(405).json({message: "Email is already in use", status: 405}) ;
+            }
+            else
+            {
+                await addUserData(user) ;
+                return res.status(200).json({message: "User Signed up successfully", status: 200}) ;
+            }
+                
+            
         }
         catch (error)
         {

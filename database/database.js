@@ -39,6 +39,20 @@ export async function addUserData(user)
     }
 }
 
+export async function emailCheckDuplicate(user_email)
+{
+    const querySnapshot = await getDocs(collection(database, "users"));
+    for (const doc of querySnapshot.docs)
+    {
+        let user = doc.data() ;
+        if (user_email == user.email)
+        {
+            return true;
+        }
+    }
+    return false ;
+}
+
 export async function userLogin(user_data)
 {
     const querySnapshot = await getDocs(collection(database, "users"));
