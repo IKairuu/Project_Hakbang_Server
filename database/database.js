@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
 import * as dotenv from "dotenv" ;
+import bcrypt from "bcrypt"  ;
 dotenv.config() ;
 
 const firebaseApp = {
@@ -19,23 +20,33 @@ const firebaseApp = {
 
 export async function addUserData(user)
 {
+    const saltRounds = 10 ;
     try
     {
-        const doc_data = await addDoc(collection(database, "users"), 
-        {
-            name: user.name,
-            email: user.email,
-            password: user.password,
-            avatar: user.avatar,
-            occupation: user.occupation,
-            institution: user.institution,
-            grade: user.grade
+        await bcrypt.genSalt(saltRounds, (err, salt) => {
+            bcrypt.hash(user.password, salt,  async (err, hash) => {
+                if (err)
+                {
+                    console.error(`Error: ${err}`) ; 
+                    throw err ;
+                } 
+                const doc_data = await addDoc(collection(database, "users"), 
+                {
+                    name: user.name,
+                    email: user.email,
+                    password: hash,
+                    avatar: user.avatar,
+                    occupation: user.occupation,
+                    institution: user.institution,
+                    grade: user.grade
+                }) ;
+            }) ;
         }) ;
+        
     }
     catch(error)
     {
         console.error(`Error: ${error}`) ;
-        throw Error(error) ;
     }
 }
 
@@ -55,16 +66,18 @@ export async function emailCheckDuplicate(user_email)
 
 export async function userLogin(user_data)
 {
+    let data = null ;
     const querySnapshot = await getDocs(collection(database, "users"));
     for (const doc of querySnapshot.docs)
     {
         let user = doc.data() ;
-        if (user_data.email == user.email && user_data.password == user.password)
+        if (user.email == user_data.email  && await bcrypt.compare(user_data.password, user.password))
         {
-            return user.email;
+            data = user  ;
         }
+        
     }
-    return null ;
+    return data ;
 }
 
 export async function getUserData(user_email)

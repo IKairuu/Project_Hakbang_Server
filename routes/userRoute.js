@@ -21,8 +21,6 @@ user.post("/signup", async (req, res) =>
                 await addUserData(user) ;
                 return res.status(200).json({message: "Signed up successfully", status: 200}) ;
             }
-                
-            
         }
         catch (error)
         {
