@@ -109,7 +109,7 @@ export async function getColleges()
 export async function getScholarships()
 {
     let scholarships = [] ;
-    const querySnapshot = await getDocs(collection(database, "scholarship"));
+    const querySnapshot = await getDocs(collection(database, "scholarships"));
     for (const doc of querySnapshot.docs)
     {
         let scholar = doc.data() ;
