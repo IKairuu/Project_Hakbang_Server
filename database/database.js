@@ -38,7 +38,8 @@ export async function addUserData(user)
                     avatar: user.avatar,
                     occupation: user.occupation,
                     institution: user.institution,
-                    grade: user.grade
+                    grade: user.grade,
+                    role: user.role
                 }) ;
             }) ;
         }) ;
