@@ -24,6 +24,7 @@ user.post("/signup", async (req, res) =>
         }
         catch (error)
         {
+            console.log(error) ;
             return res.status(501).json({message: "Server error: Sign up failed", status: 501}) ;
         }
         
@@ -49,6 +50,7 @@ user.get("/auth/:email/get-user-data", authentication, async (req, res) => {
     }
     catch (error)
     {
+        console.log(error) ;
         return res.status(502).json({message: "Server error: Cannot retrieve user data", status: 502}) ; 
     }
     
@@ -77,6 +79,7 @@ user.post("/auth/post-activity", authentication, async (req, res) => {
     }
     catch (error)
     {
+        console.log(error) ;
         return res.status(503).json({message: "Server error: Cannot upload user activities", status: 503}) ;
     }
 }) ;
@@ -90,6 +93,7 @@ user.post("/auth/get-activities", authentication, async (req, res) => {
     }
     catch (error)
     {
+        console.log(error) ;
         return res.status(504).json({message: "Server error: Cannot retrieve user activities", status:504}) ;
     }
 }) ;
@@ -103,6 +107,7 @@ user.post("/auth/remove-activities", authentication, async (req, res) => {
     }
     catch (error)
     {
+        console.log(error) ;
         return res.status(505).json({message: "Server error: Cannot remove activities", status:505}) ;
     }
 
@@ -131,6 +136,7 @@ user.post("/auth/post-saved-schools", authentication, async (req, res) => {
     }
     catch (error)
     {
+        console.log(error) ;
         return res.status(507).json({message: "Server error: Cannot upload saved schools", status: 507}) ;
     }
 }) ;
@@ -144,6 +150,7 @@ user.post("/auth/remove-saved-school", authentication, async (req, res) => {
     }
     catch (error)
     {
+        console.log(error) ;
         return res.status(508).json({message: "Server error: Cannot remove saved school", status: 508}) ;
     }
     
