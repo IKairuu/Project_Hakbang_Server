@@ -1,5 +1,5 @@
 import express from "express";
-import {addUserActivity, addUserData, getUserActivities, getUserData, saveSchool, getSavedSchool, removeSavedSchool, removeUserActivity, userLogin, emailCheckDuplicate} from "../database/database.js";
+import {addUserActivity, addUserData, getUserActivities, getUserData, saveSchool, getSavedSchool, removeSavedSchool, removeUserActivity, userLogin, emailCheckDuplicate, updateAboutMe} from "../database/database.js";
 import {authentication} from "../config/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
@@ -52,6 +52,20 @@ user.get("/auth/:email/get-user-data", authentication, async (req, res) => {
         return res.status(502).json({message: "Server error: Cannot retrieve user data", status: 502}) ; 
     }
     
+}) ;
+
+user.put("/auth/change-about-me", authentication, async  (req, res) => {
+    const updates = req.body ;
+    try
+    {
+        await updateAboutMe(updates["email"], updates["about_me"]) ;
+        return res.status(200).json({message:"Successfully Updated user data", status: 200}) ;
+    }
+    catch (error)
+    {
+        console.log(error) ;
+        return res.status(513).json({message: "Server error: Cannot update user about me", status: 513}) ;
+    }
 }) ;
 
 user.post("/auth/post-activity", authentication, async (req, res) => {

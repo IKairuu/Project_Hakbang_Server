@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import * as dotenv from "dotenv" ;
 import bcrypt from "bcrypt"  ;
 dotenv.config() ;
@@ -75,7 +75,7 @@ export async function userLogin(user_data)
         let user = doc.data() ;
         if (user.email == user_data.email  && await bcrypt.compare(user_data.password, user.password))
         {
-            data = user  ;
+            data = user.email  ;
         }
         
     }
@@ -94,6 +94,23 @@ export async function getUserData(user_email)
         }
     }
     return null ;
+}
+
+export async function updateAboutMe(user_email, new_about_me)
+{
+    const querySnapshot = await getDocs(collection(database, "users")) ;
+    for (const docs of querySnapshot.docs)
+    {
+        let user_id = docs.id ;
+        let user = docs.data() ;
+        if (user_email == user.email)
+        {
+            await updateDoc(doc(database, "users", user_id), 
+            {
+                about_me : new_about_me
+            })  ;
+        }
+    }
 }
 
 export async function getColleges()
