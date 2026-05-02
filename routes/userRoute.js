@@ -1,5 +1,5 @@
 import express from "express";
-import {addUserActivity, addUserData, getUserActivities, getUserData, saveSchool, getSavedSchool, removeSavedSchool, removeUserActivity, userLogin, emailCheckDuplicate, updateAboutMe} from "../database/database.js";
+import {addUserActivity, addUserData, getUserActivities, getUserData, saveSchool, getSavedSchool, removeSavedSchool, removeUserActivity, userLogin, emailCheckDuplicate, updateAboutMe, getSavedScholarships, saveScholarships, removeSavedScholarship} from "../database/database.js";
 import {authentication} from "../config/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
@@ -66,7 +66,7 @@ user.put("/auth/change-about-me", authentication, async  (req, res) => {
     catch (error)
     {
         console.log(error) ;
-        return res.status(513).json({message: "Server error: Cannot update user about me", status: 513}) ;
+        return res.status(514).json({message: "Server error: Cannot update user about me", status: 514}) ;
     }
 }) ;
 
@@ -113,6 +113,48 @@ user.post("/auth/remove-activities", authentication, async (req, res) => {
 
 }) ;
 
+user.post("/auth/get-saved-scholarship", authentication, async (req, res) => {
+    let user_data = req.body ;
+    try
+    {
+        const scholars = await getSavedScholarships(user_data.email) ;
+        res.status(200).json({message:"Saved Scholarshis retrieved successfully", data: scholars, status: 200}) ;
+    }
+    catch (error)
+    {
+        console.log(error) ;
+        return res.status(515).json({message: "Server error: Cannot retrieve saved scholarships", status: 515}) ;
+    }
+}) ;
+
+user.post("/auth/post-saved-scholarship", authentication, async (req, res) => {
+    let user_data = req.body ;
+    try
+    {
+        const schools = await saveScholarships(user_data) ;
+        res.status(200).json({message:"Scholarship Saved Successfully", status: 200}) ;
+    }
+    catch (error)
+    {
+        console.log(error) ;
+        return res.status(516).json({message: "Server error: Cannot upload saved scholarships", status: 516}) ;
+    }
+}) ;
+
+user.post("/auth/remove-saved-scholarship", authentication, async (req, res) => {
+    const scholars = req.body ;
+    try
+    {
+        const server_response = await removeSavedScholarship(scholars) ;
+        return res.status(200).json({message: "Delete Successfull", status: 200}) ;
+    }
+    catch (error)
+    {
+        console.log(error) ;
+        return res.status(517).json({message: "Server error: Cannot remove saved scholarship", status: 517}) ;
+    }
+}) ;
+
 user.post("/auth/get-saved-schools", authentication, async (req, res) => {
     let user_data = req.body ;
     try
@@ -153,7 +195,6 @@ user.post("/auth/remove-saved-school", authentication, async (req, res) => {
         console.log(error) ;
         return res.status(508).json({message: "Server error: Cannot remove saved school", status: 508}) ;
     }
-    
 }) ;
 
 //FOR TESTING PURPOSES

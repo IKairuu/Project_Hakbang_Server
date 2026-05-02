@@ -203,6 +203,54 @@ export async function saveSchool(schoolData)
     }
 }
 
+export async function saveScholarships(scholarshipData) 
+{
+    try
+    {
+        const doc_data = await addDoc(collection(database, "saved_scholarships"),
+        {
+            scholarship_name: scholarshipData.scholarship_name,
+            email: scholarshipData.email
+        }) ;
+
+    }
+    catch (error)
+    {
+        console.error(`Error: ${error}`) ;
+        throw Error(error) ;
+    }
+}
+
+export async function getSavedScholarships(user_email)
+{
+    let scholars = []
+    const querySnapshot = await getDocs(collection(database, "saved_scholarships")) ;
+
+    for (const doc of querySnapshot.docs)
+    {
+        let saved = doc.data() ;
+        if (user_email == saved.email)
+        {
+            scholars.push(saved) ;
+        }
+    }
+    return scholars;
+}
+
+export async function removeSavedScholarship(scholarshipData)
+{
+    const querySnapshot = await getDocs(collection(database, "saved_scholarships")) ;
+    for (const documents of querySnapshot.docs)
+    {
+        let document_id = documents.id ;
+        let saved = documents.data() ;
+        if (scholarshipData.email == saved.email && scholarshipData.scholarship_name == saved.scholarship_name)
+        {
+            await deleteDoc(doc(database, "saved_scholarships", document_id));
+        }
+    }
+}
+
 export async function getSavedSchool(user_email)
 {
     let schools = []
