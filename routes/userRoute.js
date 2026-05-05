@@ -35,7 +35,7 @@ user.post("/login", async (req, res) => {
     if (user_email == null)
         return res.status(401).json({message:"Invalid Username or password", status: 401}) ;
 
-    let accessToken = jwt.sign({data: user_email}, process.env.JWT_SECRET_KEY) ;
+    let accessToken = jwt.sign({data: user_email}, process.env.JWT_SECRET_KEY, {expiresIn: "2h"}) ;
     return res.status(200).json({message: "Successfully logged in", token: accessToken, status: 200, data: user_email}) ;
 }) ;
 
