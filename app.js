@@ -17,8 +17,9 @@ app.use("/chat", chat) ;
 app.use("/scholarship", scholar) ;
 app.use("/review-hub", center) ;
 
-app.get("/", (req, res) => {
-    console.log("API is running") ;
+app.get("/ping", (req, res) => {
+    let response = res.status(200).json({message: "Connecting to Server"}) ;
+    return response ;
 }) ;
 
 app.listen(port, function() {console.log(`Listening to http://localhost:${port}`)}); 
