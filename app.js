@@ -18,7 +18,7 @@ app.use("/scholarship", scholar) ;
 app.use("/review-hub", center) ;
 
 app.get("/ping", (req, res) => {
-    let response = res.status(200).json({message: "Connecting to Server"}) ;
+    let response = res.status(200).json({message: "Connected to Server"}) ;
     return response ;
 }) ;
 
