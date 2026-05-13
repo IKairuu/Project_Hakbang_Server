@@ -1,7 +1,7 @@
 import express from "express" ;
 import { GoogleGenAI } from "@google/genai";
 import * as dotenv from "dotenv" ;
-import { authentication } from "../config/auth.js";
+import { authentication } from "../middleware/auth.js";
 dotenv.config() ;
 
 const chat = express.Router() ;

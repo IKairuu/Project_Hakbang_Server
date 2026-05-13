@@ -3,23 +3,20 @@ import * as dotenv from "dotenv" ;
 dotenv.config() ;
 
 const app = express() ;
-const port = process.env.PORT || 5050 ;
-import user from "./routes/userRoute.js" ;
-import college from "./routes/collegeRouter.js" ;
-import chat from "./routes/chatRouter.js" ;
-import scholar from "./routes/scholarRouter.js" ;
-import center from "./routes/reviewCenterRouter.js" ;
+
+import user from "./routers/userRoute.js" ;
+import college from "./routers/collegeRouter.js" ;
+import chat from "./routers/chatRouter.js" ;
+import scholar from "./routers/scholarRouter.js" ;
+import center from "./routers/reviewCenterRouter.js" ;
+import { authentication } from "./middleware/auth.js";
 
 app.use(express.json()) ;
+app.use("/auth/college", authentication, college) ;
+app.use("/auth/scholarship", authentication, scholar) ;
+app.use("/auth/review-hub", authentication, center) ;
+app.use("/auth/chat", authentication,chat) ;
 app.use("/user", user) ;
-app.use("/college", college) ;
-app.use("/chat", chat) ;
-app.use("/scholarship", scholar) ;
-app.use("/review-hub", center) ;
 
-app.get("/ping", (req, res) => {
-    let response = res.status(200).json({message: "Connected to Server"}) ;
-    return response ;
-}) ;
+export default app ;
 
-app.listen(port, function() {console.log(`Listening to http://localhost:${port}`)}); 

@@ -1,5 +1,5 @@
 import express from "express" ;
-import { authentication } from "../config/auth.js";
+import { authentication } from "../middleware/auth.js";
 import { getHubs } from "../database/database.js" ;
 
 const center = express.Router() ;

@@ -1,6 +1,6 @@
 import express from "express" ;
 import { getScholarships } from "../database/database.js";
-import { authentication } from "../config/auth.js";
+import { authentication } from "../middleware/auth.js";
 
 const scholar = express.Router() ;
 

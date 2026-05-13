@@ -1,6 +1,6 @@
 import express from "express";
 import {addUserActivity, addUserData, getUserActivities, getUserData, saveSchool, getSavedSchool, removeSavedSchool, removeUserActivity, userLogin, emailCheckDuplicate, updateAboutMe, getSavedScholarships, saveScholarships, removeSavedScholarship} from "../database/database.js";
-import {authentication} from "../config/auth.js" ;
+import {authentication} from "../middleware/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
 dotenv.config() ;
