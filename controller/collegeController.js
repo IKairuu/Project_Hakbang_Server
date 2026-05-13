@@ -9,6 +9,6 @@ export const collegeList = async (req, res)=>
     }
     catch(error)
     {
-        return res.status(511).json({message:error.message , status: 511}) ;
+        return res.status(500).json({message:error.message , status: 500}) ;
     }
 }
