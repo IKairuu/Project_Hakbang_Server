@@ -1,16 +1,8 @@
 import express from "express" ;
-import {authentication} from "../middleware/auth.js" ;
-import { getColleges } from "../database/database.js";
+import { authentication } from "../middleware/auth.js" ;
+import { collegeList } from "../controller/collegeController.js" ;
 
 const collegeRouter = express.Router() ;
 
-collegeRouter.get("/available-colleges" ,async (req, res) => {
-    let colleges = await getColleges() ;
-    if (!colleges)
-        return res.status(511).json({message:"Server Error: Colleges not found", status: 511}) ;
-
-    return res.status(200).json({message: "Colleges loaded successfully", data: colleges, status: 200}) ;
-}
-) ;
-
+collegeRouter.get("/available-colleges" , collegeList) ;
 export default collegeRouter ;

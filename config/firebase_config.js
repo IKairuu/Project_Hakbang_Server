@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import * as dotenv from "dotenv" ;
-import bcrypt from "bcrypt"  ;
 dotenv.config() ;
 
 const firebaseApp = {
@@ -16,6 +15,5 @@ const firebaseApp = {
 
   // Initialize Firebase
   const app = initializeApp(firebaseApp);
-  const database = getFirestore(app) ;
 
-export default database ;
+export const database = getFirestore(app) ;
