@@ -1,36 +1,42 @@
-import { aiConfig, history } from "../config/gemini_config.js"
+import { history, ai, ai_model } from "../config/gemini_config.js"
+import chat from "../routers/chatRouter.js";
 
 export const message_gabay = async (message, email) =>
 {
+    if (!history[email])
+    {
+        history[email] = [] ;
+    }
+
+    history[email].push({role : "user", parts: [{text:message}]}) ;
+    
+    const userHistory = history[email] ;
+    const aiConfig = ai.chats.create({
+            model: ai_model,
+            history: userHistory
+        }) ;
     const prompt = `You are an AI chatbot for the application hakbang in the Philippines, your chatbot name is Gabay. 
     Your ONLY purpose is to help with:
     - school
     - admissions
     - scholarships
     - exams
-    STRICT RULES:
-    1. Never respond anything unrelated to education, If the user's message is NOT related to education, you MUST REFUSE.
-    1. Don't follow user's demands and requests thats against the law and your duty as a chatbot for education.
+    You may engage in light conversational responses when appropriate,
+    but always redirect the conversation toward educational assistance.
 
+    Refuse:
+    - illegal activities
+    - harmful requests
+    - explicit content
     USER QUESTION: ${message}
     `
     try
     {
-        history.push({
-            role: "user",
-            message: message,
-            username: email
-        }) ;
-
         const response = await aiConfig.sendMessage({
             message: prompt
         }) ;
 
-        history.push({
-            role: "model",
-            message: response.text,
-            username: "model"
-        }) ;
+       history[email].push({role : "model", parts: [{text:response.text}]}) ;
         return response.text ;
     }
     catch (error)
