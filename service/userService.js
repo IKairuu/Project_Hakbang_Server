@@ -4,7 +4,7 @@ import { db_add_user, db_getAllUsers } from "../repository/userRepository.js";
 
 export const register = async (user_data) =>
 {
-    if ((await db_getAllUsers()).forEach((value) => Object.values(value).includes(user_data.email) ))
+    if ((await db_getAllUsers()).some((value) => value["email"] == user_data.email))
     {
         throw new Error("Email already used") ;
     }
