@@ -3,32 +3,12 @@ import {addUserActivity, addUserData, getUserActivities, getUserData, saveSchool
 import {authentication} from "../middleware/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
+import { registerUser } from "../controller/userController.js";
 dotenv.config() ;
 
 const user = express.Router() ;
 
-user.post("/signup", async (req, res) => 
-    {
-        const user = req.body;
-        try
-        {
-            if (await emailCheckDuplicate(user["email"]))
-            {
-                return res.status(405).json({message: "Email is already in use", status: 405}) ;
-            }
-            else
-            {
-                await addUserData(user) ;
-                return res.status(200).json({message: "Signed up successfully", status: 200}) ;
-            }
-        }
-        catch (error)
-        {
-            console.log(error) ;
-            return res.status(501).json({message: "Server error: Sign up failed", status: 501}) ;
-        }
-        
-    }) ;
+user.post("/signup", registerUser) ;
 
 user.post("/login", async (req, res) => {
     let user_email = await userLogin(req.body) ;
