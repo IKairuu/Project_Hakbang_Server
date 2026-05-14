@@ -1,10 +1,10 @@
 class User
 {
-    constructor(name, email, hash, avatar, occupation, institution, grade, role, about_me)
+    constructor(name, email, password_hash, avatar, occupation, institution, grade, role, about_me)
     {
         this.name = name ;
         this.email = email ;
-        this.hash = hash ;
+        this.password_hash = password_hash ;
         this.avatar = avatar ;
         this.occupation = occupation ;
         this.institution = institution ;

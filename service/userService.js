@@ -6,7 +6,7 @@ export const register = async (user_data) =>
 {
     if ((await db_getAllUsers()).some((value) => value["email"] == user_data.email))
     {
-        throw new Error("Email already used") ;
+        throw new Error("EMAIL_IN_USE") ;
     }
 
     const saltRounds = 10 ;

@@ -21,6 +21,14 @@ export const registerUser = async (req, res) =>
     }
     catch (error)
     {
-        return res.status(500).json({message: error.message, status:500}) ;
+        if (error.message == "EMAIL_IN_USE")
+        {
+            return res.status(400).json({message: "Email already in use", status:400}) ;
+        }
+        else
+        {
+            return res.status(500).json({message: error.message, status:500}) ;
+        }
+        
     }
 }

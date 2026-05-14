@@ -10,7 +10,7 @@ export async function db_add_user(user)
         {
             name: user.name,
             email: user.email,
-            password: user.hash,
+            password: user.password_hash,
             avatar: user.avatar,
             occupation: user.occupation,
             institution: user.institution,
