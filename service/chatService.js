@@ -41,6 +41,6 @@ export const message_gabay = async (message, email) =>
     }
     catch (error)
     {
-        throw new Error(`Chat Error: ${error.message["error"]["message"]}`) ;
+        throw new Error(JSON.parse(error.message)["error"]["message"]) ;
     }
 }
