@@ -3,7 +3,7 @@ import { addUserData, getUserData, saveSchool, getSavedSchool, removeSavedSchool
 import {authentication} from "../middleware/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
-import { addUserActivity, changeAboutUser, getUserActivity, loginUser, registerUser, removeUserActivity } from "../controller/userController.js";
+import { addUserActivity, changeAboutUser, getUserActivity, getUserSavedScholarships, loginUser, registerUser, removeUserActivity } from "../controller/userController.js";
 dotenv.config() ;
 
 const user = express.Router() ;
@@ -14,6 +14,7 @@ user.put("/auth/change-about-me", authentication, changeAboutUser) ;
 user.post("/auth/post-activity", authentication, addUserActivity) ;
 user.get("/auth/get-activities/:email", authentication, getUserActivity) ;
 user.delete("/auth/remove-activities/:email", authentication,removeUserActivity) ;
+user.get("/auth/get-saved-scholarship/:email", authentication, getUserSavedScholarships) ;
 
 //TODO gets saved scholarship endpoint
 user.post("/auth/get-saved-scholarship", authentication, async (req, res) => {

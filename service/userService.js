@@ -1,7 +1,7 @@
 import bcrypt  from "bcrypt" ;
 import User from "../model/user.js";
 import jwt from "jsonwebtoken" ;
-import { db_add_user, db_change_about_me, db_get_activities, db_get_user_data, db_getAllUsers, db_login_user, db_post_activity, db_remove_user_activity } from "../repository/userRepository.js";
+import { db_add_user, db_change_about_me, db_get_activities, db_get_saved_scholarships, db_get_user_data, db_getAllUsers, db_login_user, db_post_activity, db_remove_user_activity } from "../repository/userRepository.js";
 
 export const register = async (user_data) =>
 {
@@ -85,4 +85,10 @@ export const removeActivity = async (email) =>
     {
         throw new Error(error.message) ;
     }
+}
+
+export const getSavedScholarships = async (email) => 
+{
+    let saved = await db_get_saved_scholarships(email) ;
+    return saved ;
 }

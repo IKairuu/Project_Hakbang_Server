@@ -1,4 +1,4 @@
-import { changeAboutMe, getActivity, login, postActivity, register, removeActivity } from "../service/userService.js";
+import { changeAboutMe, getActivity, getSavedScholarships, login, postActivity, register, removeActivity } from "../service/userService.js";
 
 export const registerUser = async (req, res) =>
 {
@@ -111,5 +111,19 @@ export const removeUserActivity = async (req, res) =>
     catch (error)
     {
         return res.status(200).json({message: `Server Error: ${error.message}`, status: 200}) ;
+    }
+}
+
+export const getUserSavedScholarships = async (req, res) => 
+{
+    let email = req.params.email ;
+    try
+    {
+        let scholarships = await getSavedScholarships(email) ;
+        return res.status(200).json({message: "Successfully retrieved saved scholarships", data: scholarships, status: 200}) ;
+    }
+    catch (error)
+    {
+        return res.status(500).json({message: `Server Error: ${error.message}`, data: scholarships, status: 500}) ;
     }
 }

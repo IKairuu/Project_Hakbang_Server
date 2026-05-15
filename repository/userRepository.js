@@ -131,3 +131,18 @@ export async function db_remove_user_activity(email)
         }
     }
 }
+
+export async function db_get_saved_scholarships(email)
+{
+    let scholars = []
+    const querySnapshot = await getDocs(collection(database, "saved_scholarships")) ;
+    for (const doc of querySnapshot.docs)
+    {
+        let saved = doc.data() ;
+        if (email == saved.email)
+        {
+            scholars.push(saved) ;
+        }
+    }
+    return scholars;
+}
