@@ -184,3 +184,19 @@ export async function db_remove_saved_scholarship(scholarship_data)
         throw new Error(`Database Error: ${error.message}`) ;
     }
 }
+
+export async function db_get_saved_schools(email)
+{
+    let schools = []
+    const querySnapshot = await getDocs(collection(database, "saved_schools")) ;
+
+    for (const doc of querySnapshot.docs)
+    {
+        let saved = doc.data() ;
+        if (email == saved.email)
+        {
+            schools.push(saved) ;
+        }
+    }
+    return schools ;
+}

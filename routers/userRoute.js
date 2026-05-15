@@ -3,7 +3,7 @@ import { addUserData, getUserData, saveSchool, getSavedSchool, removeSavedSchool
 import {authentication} from "../middleware/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
-import { addUserActivity, changeAboutUser, getUserActivity, getUserSavedScholarships, loginUser, postUserSavedScholarship, registerUser, removeUserActivity, removeUserSavedScholarship } from "../controller/userController.js";
+import { addUserActivity, changeAboutUser, getUserActivity, getUserSavedScholarships, getUserSavedSchools, loginUser, postUserSavedScholarship, registerUser, removeUserActivity, removeUserSavedScholarship } from "../controller/userController.js";
 dotenv.config() ;
 
 const user = express.Router() ;
@@ -17,22 +17,7 @@ user.delete("/auth/remove-activities/:email", authentication,removeUserActivity)
 user.get("/auth/get-saved-scholarship/:email", authentication, getUserSavedScholarships) ;
 user.post("/auth/post-saved-scholarship", authentication, postUserSavedScholarship) ;
 user.post("/auth/remove-saved-scholarship", authentication, removeUserSavedScholarship) ;
-
-//TODO get saved schools endpoint
-user.post("/auth/get-saved-schools", authentication, async (req, res) => {
-    let user_data = req.body ;
-    try
-    {
-        const schools = await getSavedSchool(user_data.email) ;
-        res.status(200).json({message:"Saved Schools retrieved successfully", data: schools, status: 200}) ;
-    }
-    catch (error)
-    {
-        console.log(error) ;
-        return res.status(506).json({message: "Server error: Cannot retrieve saved schools", status: 506}) ;
-    }
-}) ;
-
+user.get("/auth/get-saved-schools/:email", authentication, getUserSavedSchools) ;
 //TODO post saved schools endpoint
 user.post("/auth/post-saved-schools", authentication, async (req, res) => {
     let user_data = req.body ;
