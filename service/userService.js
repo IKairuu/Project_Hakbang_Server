@@ -1,7 +1,7 @@
 import bcrypt  from "bcrypt" ;
 import User from "../model/user.js";
 import jwt from "jsonwebtoken" ;
-import { db_add_user, db_change_about_me, db_get_activities, db_get_saved_scholarships, db_get_saved_schools, db_get_user_data, db_getAllUsers, db_login_user, db_post_activity, db_post_saved_scholarship, db_post_saved_schools, db_remove_saved_scholarship, db_remove_user_activity } from "../repository/userRepository.js";
+import { db_add_user, db_change_about_me, db_get_activities, db_get_saved_scholarships, db_get_saved_schools, db_get_user_data, db_getAllUsers, db_login_user, db_post_activity, db_post_saved_scholarship, db_post_saved_schools, db_remove_saved_scholarship, db_remove_saved_school, db_remove_user_activity } from "../repository/userRepository.js";
 
 export const register = async (user_data) =>
 {
@@ -128,6 +128,18 @@ export const postSavedSchools = async (school_data) =>
     try
     {
         await db_post_saved_schools(school_data) ;
+    }
+    catch (error)
+    {
+        throw new Error(error.message) ;
+    }
+}
+
+export const removeSavedSchool = async (school_data) =>
+{
+    try
+    {
+        await db_remove_saved_school(school_data) ;
     }
     catch (error)
     {

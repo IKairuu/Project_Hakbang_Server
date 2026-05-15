@@ -1,4 +1,4 @@
-import { changeAboutMe, getActivity, getSavedScholarships, login, postActivity, register, removeActivity, postSavedScholarship, removeSavedScholarship, getSavedSchools, postSavedSchools } from "../service/userService.js";
+import { changeAboutMe, getActivity, getSavedScholarships, login, postActivity, register, removeActivity, postSavedScholarship, removeSavedScholarship, getSavedSchools, postSavedSchools, removeSavedSchool } from "../service/userService.js";
 
 export const registerUser = async (req, res) =>
 {
@@ -170,5 +170,19 @@ export const postUserSavedSchools = async (req, res) =>
     catch (error)
     {
         return res.status(500).json({message: error.message, status: 500}) ;
+    }
+}
+
+export const removeUserSavedSchool = async (req, res) =>
+{
+    let school_data = req.body ;
+    try
+    {
+        await removeSavedSchool(school_data) ;
+        return res.status(200).json({message: "Successfully removed", status:200}) ;
+    }
+    catch (error)
+    {
+        return res.status(500).json({message: error.message, status:500}) ;
     }
 }
