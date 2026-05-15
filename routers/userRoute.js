@@ -3,7 +3,7 @@ import { addUserData, getUserData, saveSchool, getSavedSchool, removeSavedSchool
 import {authentication} from "../middleware/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
-import { addUserActivity, changeAboutUser, getUserActivity, getUserSavedScholarships, getUserSavedSchools, loginUser, postUserSavedScholarship, registerUser, removeUserActivity, removeUserSavedScholarship } from "../controller/userController.js";
+import { addUserActivity, changeAboutUser, getUserActivity, getUserSavedScholarships, getUserSavedSchools, loginUser, postUserSavedScholarship, postUserSavedSchools, registerUser, removeUserActivity, removeUserSavedScholarship } from "../controller/userController.js";
 dotenv.config() ;
 
 const user = express.Router() ;
@@ -18,20 +18,7 @@ user.get("/auth/get-saved-scholarship/:email", authentication, getUserSavedSchol
 user.post("/auth/post-saved-scholarship", authentication, postUserSavedScholarship) ;
 user.post("/auth/remove-saved-scholarship", authentication, removeUserSavedScholarship) ;
 user.get("/auth/get-saved-schools/:email", authentication, getUserSavedSchools) ;
-//TODO post saved schools endpoint
-user.post("/auth/post-saved-schools", authentication, async (req, res) => {
-    let user_data = req.body ;
-    try
-    {
-        const schools = await saveSchool(user_data) ;
-        res.status(200).json({message:"School Saved Successfully", status: 200}) ;
-    }
-    catch (error)
-    {
-        console.log(error) ;
-        return res.status(507).json({message: "Server error: Cannot upload saved schools", status: 507}) ;
-    }
-}) ;
+user.post("/auth/post-saved-schools", authentication, postUserSavedSchools) ;
 
 //TODO remove saved school endpoint
 user.post("/auth/remove-saved-school", authentication, async (req, res) => {

@@ -200,3 +200,20 @@ export async function db_get_saved_schools(email)
     }
     return schools ;
 }
+
+export async function db_post_saved_schools(school_data)
+{
+    try
+    {
+        const doc_data = await addDoc(collection(database, "saved_schools"),
+        {
+            college_name: school_data.college_name,
+            email: school_data.email
+        }) ;
+
+    }
+    catch (error)
+    {
+        throw new Error(`Database error: ${error.message}`) ;
+    }
+}

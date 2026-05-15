@@ -1,22 +1,11 @@
-import { changeAboutMe, getActivity, getSavedScholarships, login, postActivity, register, removeActivity, postSavedScholarship, removeSavedScholarship, getSavedSchools } from "../service/userService.js";
+import { changeAboutMe, getActivity, getSavedScholarships, login, postActivity, register, removeActivity, postSavedScholarship, removeSavedScholarship, getSavedSchools, postSavedSchools } from "../service/userService.js";
 
 export const registerUser = async (req, res) =>
 {
     let data = req.body ;
-    let user_data = {
-        "name" : data.name,
-        "email": data.email,
-        "password": data.password,
-        "avatar": data.avatar,
-        "occupation": data.occupation,
-        "institution": data.institution,
-        "grade": data.grade,
-        "role": data.role,
-        "about_me" : data.about_me
-    }
     try
     {
-        await register(user_data) ;
+        await register(data) ;
         return res.status(200).json({message: "Registration Successfull", status: 200})
     }
     catch (error)
@@ -163,6 +152,20 @@ export const getUserSavedSchools = async (req, res) =>
     {
         let schools = await getSavedSchools(email) ;
         return res.status(200).json({message: "Saved Schools successfully retrieved", data: schools, status: 200}) ;
+    }
+    catch (error)
+    {
+        return res.status(500).json({message: error.message, status: 500}) ;
+    }
+}
+
+export const postUserSavedSchools = async (req, res) =>
+{
+    let school_data = req.body ;
+    try
+    {
+        await postSavedSchools(school_data) ;
+        return res.status(200).json({message: "Successfully saved", status: 200}) ;
     }
     catch (error)
     {
