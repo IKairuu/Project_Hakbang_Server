@@ -3,22 +3,15 @@ import {addUserActivity, addUserData, getUserActivities, getUserData, saveSchool
 import {authentication} from "../middleware/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
-import { registerUser } from "../controller/userController.js";
+import { loginUser, registerUser } from "../controller/userController.js";
 dotenv.config() ;
 
 const user = express.Router() ;
 
 user.post("/signup", registerUser) ; 
+user.post("/login", loginUser) ;
 
 //TODO develop login endpoint
-user.post("/login", async (req, res) => {
-    let user_email = await userLogin(req.body) ;
-    if (user_email == null)
-        return res.status(401).json({message:"Invalid Username or password", status: 401}) ;
-
-    let accessToken = jwt.sign({data: user_email}, process.env.JWT_SECRET_KEY, {expiresIn: "2h"}) ;
-    return res.status(200).json({message: "Successfully logged in", token: accessToken, status: 200, data: user_email}) ;
-}) ;
 //TODO get user data endpoint
 user.get("/auth/:email/get-user-data", authentication, async (req, res) => {
     const user_email = req.params.email ;

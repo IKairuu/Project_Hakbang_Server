@@ -37,3 +37,33 @@ export async function db_getAllUsers()
     }
     return users ;
 }
+
+export async function db_login_user(email)
+{
+    let data = null ;
+    const querySnapshot = await getDocs(collection(database, "users"));
+    for (const doc of querySnapshot.docs)
+    {
+        let user = doc.data() ;
+        if (user.email == email)
+        {
+            data = {email: user.email, password: user.password}  ;
+        }
+        
+    }
+    return data ;
+}
+
+export async function db_get_user_data(email)
+{
+    const querySnapshot = await getDocs(collection(database, "users"));
+    for (const doc of querySnapshot.docs)
+    {
+        let user_data = doc.data() ;
+        if (email == user_data.email)
+        {
+            return new User(user_data.name, user_data.email, user_data.password, user_data.avatar, user_data.occupation, user_data.institution, user_data.grade, user_data.role, user_data.about_me) ;
+        }
+    }
+    return null ;
+}
