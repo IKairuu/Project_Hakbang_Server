@@ -163,3 +163,24 @@ export async function db_post_saved_scholarship(scholarship_data)
         throw Error(`Database Error: ${error.message}`) ;
     }
 }
+
+export async function db_remove_saved_scholarship(scholarship_data)
+{
+    try
+    {
+        const querySnapshot = await getDocs(collection(database, "saved_scholarships")) ;
+        for (const documents of querySnapshot.docs)
+        {
+            let document_id = documents.id ;
+            let saved = documents.data() ;
+            if (scholarship_data.email == saved.email && scholarship_data.scholarship_name == saved.scholarship_name)
+            {
+                await deleteDoc(doc(database, "saved_scholarships", document_id));
+            }
+        }
+    }
+    catch (error)
+    {
+        throw new Error(`Database Error: ${error.message}`) ;
+    }
+}

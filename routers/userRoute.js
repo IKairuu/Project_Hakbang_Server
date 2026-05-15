@@ -3,7 +3,7 @@ import { addUserData, getUserData, saveSchool, getSavedSchool, removeSavedSchool
 import {authentication} from "../middleware/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
-import { addUserActivity, changeAboutUser, getUserActivity, getUserSavedScholarships, loginUser, postUserSavedScholarship, registerUser, removeUserActivity } from "../controller/userController.js";
+import { addUserActivity, changeAboutUser, getUserActivity, getUserSavedScholarships, loginUser, postUserSavedScholarship, registerUser, removeUserActivity, removeUserSavedScholarship } from "../controller/userController.js";
 dotenv.config() ;
 
 const user = express.Router() ;
@@ -16,21 +16,7 @@ user.get("/auth/get-activities/:email", authentication, getUserActivity) ;
 user.delete("/auth/remove-activities/:email", authentication,removeUserActivity) ;
 user.get("/auth/get-saved-scholarship/:email", authentication, getUserSavedScholarships) ;
 user.post("/auth/post-saved-scholarship", authentication, postUserSavedScholarship) ;
-
-//TODO remove saved scholarship endpoint
-user.post("/auth/remove-saved-scholarship", authentication, async (req, res) => {
-    const scholars = req.body ;
-    try
-    {
-        const server_response = await removeSavedScholarship(scholars) ;
-        return res.status(200).json({message: "Delete Successfull", status: 200}) ;
-    }
-    catch (error)
-    {
-        console.log(error) ;
-        return res.status(517).json({message: "Server error: Cannot remove saved scholarship", status: 517}) ;
-    }
-}) ;
+user.post("/auth/remove-saved-scholarship", authentication, removeUserSavedScholarship) ;
 
 //TODO get saved schools endpoint
 user.post("/auth/get-saved-schools", authentication, async (req, res) => {
