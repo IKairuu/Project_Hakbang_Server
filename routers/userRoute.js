@@ -8,8 +8,9 @@ dotenv.config() ;
 
 const user = express.Router() ;
 
-user.post("/signup", registerUser) ;
+user.post("/signup", registerUser) ; 
 
+//TODO develop login endpoint
 user.post("/login", async (req, res) => {
     let user_email = await userLogin(req.body) ;
     if (user_email == null)
@@ -18,7 +19,7 @@ user.post("/login", async (req, res) => {
     let accessToken = jwt.sign({data: user_email}, process.env.JWT_SECRET_KEY, {expiresIn: "2h"}) ;
     return res.status(200).json({message: "Successfully logged in", token: accessToken, status: 200, data: user_email}) ;
 }) ;
-
+//TODO get user data endpoint
 user.get("/auth/:email/get-user-data", authentication, async (req, res) => {
     const user_email = req.params.email ;
     try
@@ -36,6 +37,7 @@ user.get("/auth/:email/get-user-data", authentication, async (req, res) => {
     
 }) ;
 
+//TODO change about me endpoints
 user.put("/auth/change-about-me", authentication, async  (req, res) => {
     const updates = req.body ;
     try
@@ -50,6 +52,7 @@ user.put("/auth/change-about-me", authentication, async  (req, res) => {
     }
 }) ;
 
+//TODO post activity endpoint
 user.post("/auth/post-activity", authentication, async (req, res) => {
     const activity = req.body ; 
     try 
@@ -64,6 +67,7 @@ user.post("/auth/post-activity", authentication, async (req, res) => {
     }
 }) ;
 
+//TODO get activities endpoint
 user.post("/auth/get-activities", authentication, async (req, res) => {
     const user_email =  req.body ;
     try
@@ -78,6 +82,7 @@ user.post("/auth/get-activities", authentication, async (req, res) => {
     }
 }) ;
 
+//TODO remove activity endpoint
 user.post("/auth/remove-activities", authentication, async (req, res) => {
     const email = req.body.email ;
     try
@@ -93,6 +98,7 @@ user.post("/auth/remove-activities", authentication, async (req, res) => {
 
 }) ;
 
+//TODO gets saved scholarship endpoint
 user.post("/auth/get-saved-scholarship", authentication, async (req, res) => {
     let user_data = req.body ;
     try
@@ -107,6 +113,7 @@ user.post("/auth/get-saved-scholarship", authentication, async (req, res) => {
     }
 }) ;
 
+//TODO post saved scholarship endpoint
 user.post("/auth/post-saved-scholarship", authentication, async (req, res) => {
     let user_data = req.body ;
     try
@@ -121,6 +128,7 @@ user.post("/auth/post-saved-scholarship", authentication, async (req, res) => {
     }
 }) ;
 
+//TODO remove saved scholarship endpoint
 user.post("/auth/remove-saved-scholarship", authentication, async (req, res) => {
     const scholars = req.body ;
     try
@@ -135,6 +143,7 @@ user.post("/auth/remove-saved-scholarship", authentication, async (req, res) => 
     }
 }) ;
 
+//TODO get saved schools endpoint
 user.post("/auth/get-saved-schools", authentication, async (req, res) => {
     let user_data = req.body ;
     try
@@ -149,6 +158,7 @@ user.post("/auth/get-saved-schools", authentication, async (req, res) => {
     }
 }) ;
 
+//TODO post saved schools endpoint
 user.post("/auth/post-saved-schools", authentication, async (req, res) => {
     let user_data = req.body ;
     try
@@ -163,6 +173,7 @@ user.post("/auth/post-saved-schools", authentication, async (req, res) => {
     }
 }) ;
 
+//TODO remove saved school endpoint
 user.post("/auth/remove-saved-school", authentication, async (req, res) => {
     const school = req.body ;
     try
@@ -175,11 +186,6 @@ user.post("/auth/remove-saved-school", authentication, async (req, res) => {
         console.log(error) ;
         return res.status(508).json({message: "Server error: Cannot remove saved school", status: 508}) ;
     }
-}) ;
-
-//FOR TESTING PURPOSES
-user.get("/auth/test-message",authentication,(req, res) => {
-    return res.status(200).json({message:"Successful authentication"}) ;
 }) ;
 
 export default user ;
