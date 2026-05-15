@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs, updateDoc, doc } from "firebase/firestore";
 import { database } from "../config/firebase_config.js" ;
 import User from "../model/user.js"
 
@@ -66,4 +66,21 @@ export async function db_get_user_data(email)
         }
     }
     return null ;
+}
+
+export async function db_change_about_me(email, new_about_me)
+{
+    const querySnapshot = await getDocs(collection(database, "users")) ;
+    for (const docs of querySnapshot.docs)
+    {
+        let user_id = docs.id ;
+        let user = docs.data() ;
+        if (email == user.email)
+        {
+            await updateDoc(doc(database, "users", user_id), 
+            {
+                about_me : new_about_me
+            })  ;
+        }
+    }
 }

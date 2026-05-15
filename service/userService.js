@@ -1,7 +1,7 @@
 import bcrypt  from "bcrypt" ;
 import User from "../model/user.js";
 import jwt from "jsonwebtoken" ;
-import { db_add_user, db_get_user_data, db_getAllUsers, db_login_user } from "../repository/userRepository.js";
+import { db_add_user, db_change_about_me, db_get_user_data, db_getAllUsers, db_login_user } from "../repository/userRepository.js";
 
 export const register = async (user_data) =>
 {
@@ -43,4 +43,16 @@ export const login = async (user_data) =>
     let accessToken = jwt.sign({data: data.email}, process.env.JWT_SECRET_KEY, {expiresIn: "2h"}) ;
 
     return {data : {name: data.name, email: data.email, password: data.password_hash, avatar: data.avatar, occupation: data.occupation, institution: data.institution, grade: data.grade, role: data.role, about_me: data.about_me}, token: accessToken} ;
+}
+
+export const changeAboutMe = async (user_data) =>
+{
+    try
+    {
+        await db_change_about_me(user_data.email, user_data.about_me) ;
+    }
+    catch (error)
+    {
+        throw new Error(error.message) ;
+    }
 }

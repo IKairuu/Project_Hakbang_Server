@@ -3,13 +3,14 @@ import {addUserActivity, addUserData, getUserActivities, getUserData, saveSchool
 import {authentication} from "../middleware/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
-import { loginUser, registerUser } from "../controller/userController.js";
+import { changeAboutUser, loginUser, registerUser } from "../controller/userController.js";
 dotenv.config() ;
 
 const user = express.Router() ;
 
 user.post("/signup", registerUser) ; 
 user.post("/login", loginUser) ;
+user.put("/auth/change-about-me", authentication, changeAboutUser) ;
 
 //TODO change about me endpoints
 user.put("/auth/change-about-me", authentication, async  (req, res) => {
