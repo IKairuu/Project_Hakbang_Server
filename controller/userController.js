@@ -1,4 +1,4 @@
-import { changeAboutMe, login, postActivity, register } from "../service/userService.js";
+import { changeAboutMe, getActivity, login, postActivity, register } from "../service/userService.js";
 
 export const registerUser = async (req, res) =>
 {
@@ -83,5 +83,19 @@ export const addUserActivity = async (req, res) =>
     catch (error)
     {
         return res.status(500).json({message: error.message, status: 500}) ;
+    }
+}
+
+export const getUserActivity = async (req, res) =>
+{
+    let email = req.params.email
+    try
+    {
+        let activities = await getActivity(email) ;
+        return res.status(200).json({message: "Successfully retrieved activities", data: activities, status: 200}) ;
+    }
+    catch (error)
+    {
+        return res.status(500).json({message: `Server Error: ${error.message}`}) ;
     }
 }

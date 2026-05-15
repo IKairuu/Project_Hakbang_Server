@@ -102,3 +102,18 @@ export async function db_post_activity(activity)
         throw Error(`Database error: ${error.message}`) ;
     }
 }
+
+export async function db_get_activities(email)
+{
+    let activities = [] ;
+    const querySnapshot = await getDocs(collection(database, "activity"));
+    for (const doc of querySnapshot.docs)
+    {
+        let act = doc.data() ;
+        if (act.email == email)
+        {
+            activities.push(act) ;
+        }
+    }
+    return activities ;
+}

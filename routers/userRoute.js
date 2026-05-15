@@ -1,9 +1,9 @@
 import express from "express";
-import { addUserData, getUserActivities, getUserData, saveSchool, getSavedSchool, removeSavedSchool, removeUserActivity, userLogin, emailCheckDuplicate, updateAboutMe, getSavedScholarships, saveScholarships, removeSavedScholarship} from "../database/database.js";
+import { addUserData, getUserData, saveSchool, getSavedSchool, removeSavedSchool, removeUserActivity, userLogin, emailCheckDuplicate, updateAboutMe, getSavedScholarships, saveScholarships, removeSavedScholarship} from "../database/database.js";
 import {authentication} from "../middleware/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
-import { addUserActivity, changeAboutUser, loginUser, registerUser } from "../controller/userController.js";
+import { addUserActivity, changeAboutUser, getUserActivity, loginUser, registerUser } from "../controller/userController.js";
 dotenv.config() ;
 
 const user = express.Router() ;
@@ -12,23 +12,9 @@ user.post("/signup", registerUser) ;
 user.post("/login", loginUser) ;
 user.put("/auth/change-about-me", authentication, changeAboutUser) ;
 user.post("/auth/post-activity", authentication, addUserActivity) ;
-
-//TODO post activity endpoint
+user.get("/auth/get-activities/:email", authentication, getUserActivity) ;
 
 //TODO get activities endpoint
-user.post("/auth/get-activities", authentication, async (req, res) => {
-    const user_email =  req.body ;
-    try
-    {
-        let activities =  await getUserActivities(user_email) ;
-        return res.status(200).json({message: "Operation Successfull", data : activities, status : 200}) ;
-    }
-    catch (error)
-    {
-        console.log(error) ;
-        return res.status(504).json({message: "Server error: Cannot retrieve user activities", status:504}) ;
-    }
-}) ;
 
 //TODO remove activity endpoint
 user.post("/auth/remove-activities", authentication, async (req, res) => {
