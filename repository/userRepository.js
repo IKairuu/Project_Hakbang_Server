@@ -84,3 +84,21 @@ export async function db_change_about_me(email, new_about_me)
         }
     }
 }
+
+export async function db_post_activity(activity)
+{
+    try
+    {
+        const doc_data = await addDoc(collection(database, "activity"), 
+        {
+            email: activity.email,
+            description: activity.description,
+            date: activity.date,
+            iconName: activity.iconName
+        }) ;
+    }
+    catch(error)
+    {
+        throw Error(`Database error: ${error.message}`) ;
+    }
+}

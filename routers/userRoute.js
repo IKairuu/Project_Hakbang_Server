@@ -1,9 +1,9 @@
 import express from "express";
-import {addUserActivity, addUserData, getUserActivities, getUserData, saveSchool, getSavedSchool, removeSavedSchool, removeUserActivity, userLogin, emailCheckDuplicate, updateAboutMe, getSavedScholarships, saveScholarships, removeSavedScholarship} from "../database/database.js";
+import { addUserData, getUserActivities, getUserData, saveSchool, getSavedSchool, removeSavedSchool, removeUserActivity, userLogin, emailCheckDuplicate, updateAboutMe, getSavedScholarships, saveScholarships, removeSavedScholarship} from "../database/database.js";
 import {authentication} from "../middleware/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
-import { changeAboutUser, loginUser, registerUser } from "../controller/userController.js";
+import { addUserActivity, changeAboutUser, loginUser, registerUser } from "../controller/userController.js";
 dotenv.config() ;
 
 const user = express.Router() ;
@@ -11,36 +11,9 @@ const user = express.Router() ;
 user.post("/signup", registerUser) ; 
 user.post("/login", loginUser) ;
 user.put("/auth/change-about-me", authentication, changeAboutUser) ;
-
-//TODO change about me endpoints
-user.put("/auth/change-about-me", authentication, async  (req, res) => {
-    const updates = req.body ;
-    try
-    {
-        await updateAboutMe(updates["email"], updates["about_me"]) ;
-        return res.status(200).json({message:"Successfully Updated user data", status: 200}) ;
-    }
-    catch (error)
-    {
-        console.log(error) ;
-        return res.status(514).json({message: "Server error: Cannot update user about me", status: 514}) ;
-    }
-}) ;
+user.post("/auth/post-activity", authentication, addUserActivity) ;
 
 //TODO post activity endpoint
-user.post("/auth/post-activity", authentication, async (req, res) => {
-    const activity = req.body ; 
-    try 
-    {
-        await addUserActivity(activity) ;
-        return res.status(200).json({message: "Operation Successfull", status:200}) ;
-    }
-    catch (error)
-    {
-        console.log(error) ;
-        return res.status(503).json({message: "Server error: Cannot upload user activities", status: 503}) ;
-    }
-}) ;
 
 //TODO get activities endpoint
 user.post("/auth/get-activities", authentication, async (req, res) => {
