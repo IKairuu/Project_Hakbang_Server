@@ -11,25 +11,6 @@ const user = express.Router() ;
 user.post("/signup", registerUser) ; 
 user.post("/login", loginUser) ;
 
-//TODO develop login endpoint
-//TODO get user data endpoint
-user.get("/auth/:email/get-user-data", authentication, async (req, res) => {
-    const user_email = req.params.email ;
-    try
-    {
-        let user_data = await getUserData(user_email) ;
-        if (user_data == null)  return res.status(513).json({message:"Error retrieving data", status: 513}) ; 
-
-        return res.status(200).json({message:"Successfully retrieved data", status: 200, data: user_data}) ;
-    }
-    catch (error)
-    {
-        console.log(error) ;
-        return res.status(502).json({message: "Server error: Cannot retrieve user data", status: 502}) ; 
-    }
-    
-}) ;
-
 //TODO change about me endpoints
 user.put("/auth/change-about-me", authentication, async  (req, res) => {
     const updates = req.body ;
