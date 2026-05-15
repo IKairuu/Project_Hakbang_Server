@@ -3,7 +3,7 @@ import { addUserData, getUserData, saveSchool, getSavedSchool, removeSavedSchool
 import {authentication} from "../middleware/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
-import { addUserActivity, changeAboutUser, getUserActivity, getUserSavedScholarships, loginUser, registerUser, removeUserActivity } from "../controller/userController.js";
+import { addUserActivity, changeAboutUser, getUserActivity, getUserSavedScholarships, loginUser, postUserSavedScholarship, registerUser, removeUserActivity } from "../controller/userController.js";
 dotenv.config() ;
 
 const user = express.Router() ;
@@ -15,36 +15,7 @@ user.post("/auth/post-activity", authentication, addUserActivity) ;
 user.get("/auth/get-activities/:email", authentication, getUserActivity) ;
 user.delete("/auth/remove-activities/:email", authentication,removeUserActivity) ;
 user.get("/auth/get-saved-scholarship/:email", authentication, getUserSavedScholarships) ;
-
-//TODO gets saved scholarship endpoint
-user.post("/auth/get-saved-scholarship", authentication, async (req, res) => {
-    let user_data = req.body ;
-    try
-    {
-        const scholars = await getSavedScholarships(user_data.email) ;
-        res.status(200).json({message:"Saved Scholarshis retrieved successfully", data: scholars, status: 200}) ;
-    }
-    catch (error)
-    {
-        console.log(error) ;
-        return res.status(515).json({message: "Server error: Cannot retrieve saved scholarships", status: 515}) ;
-    }
-}) ;
-
-//TODO post saved scholarship endpoint
-user.post("/auth/post-saved-scholarship", authentication, async (req, res) => {
-    let user_data = req.body ;
-    try
-    {
-        const schools = await saveScholarships(user_data) ;
-        res.status(200).json({message:"Scholarship Saved Successfully", status: 200}) ;
-    }
-    catch (error)
-    {
-        console.log(error) ;
-        return res.status(516).json({message: "Server error: Cannot upload saved scholarships", status: 516}) ;
-    }
-}) ;
+user.post("/auth/post-saved-scholarship", authentication, postUserSavedScholarship) ;
 
 //TODO remove saved scholarship endpoint
 user.post("/auth/remove-saved-scholarship", authentication, async (req, res) => {
