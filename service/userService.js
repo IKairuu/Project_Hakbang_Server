@@ -1,7 +1,7 @@
 import bcrypt  from "bcrypt" ;
 import User from "../model/user.js";
 import jwt from "jsonwebtoken" ;
-import { db_add_user, db_change_about_me, db_get_activities, db_get_user_data, db_getAllUsers, db_login_user, db_post_activity } from "../repository/userRepository.js";
+import { db_add_user, db_change_about_me, db_get_activities, db_get_user_data, db_getAllUsers, db_login_user, db_post_activity, db_remove_user_activity } from "../repository/userRepository.js";
 
 export const register = async (user_data) =>
 {
@@ -73,4 +73,16 @@ export const getActivity = async (email) =>
 {
     let activities = await db_get_activities(email) ;
     return activities ;
+}
+
+export const removeActivity = async (email) =>
+{
+    try
+    {
+        await db_remove_user_activity(email) ;
+    }
+    catch (error)
+    {
+        throw new Error(error.message) ;
+    }
 }

@@ -1,9 +1,9 @@
 import express from "express";
-import { addUserData, getUserData, saveSchool, getSavedSchool, removeSavedSchool, removeUserActivity, userLogin, emailCheckDuplicate, updateAboutMe, getSavedScholarships, saveScholarships, removeSavedScholarship} from "../database/database.js";
+import { addUserData, getUserData, saveSchool, getSavedSchool, removeSavedSchool, userLogin, emailCheckDuplicate, updateAboutMe, getSavedScholarships, saveScholarships, removeSavedScholarship} from "../database/database.js";
 import {authentication} from "../middleware/auth.js" ;
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
-import { addUserActivity, changeAboutUser, getUserActivity, loginUser, registerUser } from "../controller/userController.js";
+import { addUserActivity, changeAboutUser, getUserActivity, loginUser, registerUser, removeUserActivity } from "../controller/userController.js";
 dotenv.config() ;
 
 const user = express.Router() ;
@@ -13,24 +13,7 @@ user.post("/login", loginUser) ;
 user.put("/auth/change-about-me", authentication, changeAboutUser) ;
 user.post("/auth/post-activity", authentication, addUserActivity) ;
 user.get("/auth/get-activities/:email", authentication, getUserActivity) ;
-
-//TODO get activities endpoint
-
-//TODO remove activity endpoint
-user.post("/auth/remove-activities", authentication, async (req, res) => {
-    const email = req.body.email ;
-    try
-    {
-        await removeUserActivity(email) ;
-        return res.status(200).json({message: "Activity Deletion Successfull", status: 200}) ;
-    }
-    catch (error)
-    {
-        console.log(error) ;
-        return res.status(505).json({message: "Server error: Cannot remove activities", status:505}) ;
-    }
-
-}) ;
+user.delete("/auth/remove-activities/:email", authentication,removeUserActivity) ;
 
 //TODO gets saved scholarship endpoint
 user.post("/auth/get-saved-scholarship", authentication, async (req, res) => {

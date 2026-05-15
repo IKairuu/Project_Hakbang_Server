@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import { addDoc, collection, getDocs, updateDoc, doc , deleteDoc} from "firebase/firestore";
 import { database } from "../config/firebase_config.js" ;
 import User from "../model/user.js"
 
@@ -116,4 +116,18 @@ export async function db_get_activities(email)
         }
     }
     return activities ;
+}
+
+export async function db_remove_user_activity(email)
+{
+    const querySnapshot = await getDocs(collection(database, "activity")) ;
+    for (const documents of querySnapshot.docs)
+    {
+        let document_id = documents.id ;
+        let acts = documents.data() ;
+        if (email == acts.email)
+        {
+            await deleteDoc(doc(database, "activity", document_id));
+        }
+    }
 }
