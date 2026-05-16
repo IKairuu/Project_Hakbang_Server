@@ -57,7 +57,7 @@ export const changeAboutUser = async (req, res) =>
     }
     catch (error)
     {
-        return res.status(500).json({message: `Server error: ${error.message}`, status:500}) ;
+        return res.status(500).json({message: error.message, status:500}) ;
     }
 }
 
@@ -99,7 +99,7 @@ export const removeUserActivity = async (req, res) =>
     }
     catch (error)
     {
-        return res.status(200).json({message: `Server Error: ${error.message}`, status: 200}) ;
+        return res.status(200).json({message: error.message, status: 200}) ;
     }
 }
 
@@ -155,7 +155,7 @@ export const getUserSavedSchools = async (req, res) =>
     }
     catch (error)
     {
-        return res.status(500).json({message: error.message, status: 500}) ;
+        return res.status(500).json({message: `Server Error: ${error.message}`, status: 500}) ;
     }
 }
 

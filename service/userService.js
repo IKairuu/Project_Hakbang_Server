@@ -53,7 +53,7 @@ export const changeAboutMe = async (user_data) =>
     }
     catch (error)
     {
-        throw new Error(error.message) ;
+        throw new Error(`Server Error: ${error.message}`) ;
     }
 }
 
@@ -65,7 +65,7 @@ export const postActivity = async (activity_details) =>
     }
     catch (error)
     {
-        throw new Error(error.message) ;
+        throw new Error(`Server Error: ${error.message}`) ;
     }
 }
 
@@ -83,7 +83,7 @@ export const removeActivity = async (email) =>
     }
     catch (error)
     {
-        throw new Error(error.message) ;
+        throw new Error(`Server Error: ${error.message}`) ;
     }
 }
 
@@ -101,7 +101,7 @@ export const postSavedScholarship = async (scholarship_data) =>
     }
     catch (error)
     {
-        throw new Error(error.message) ;
+        throw new Error(`Server Error: ${error.message}`) ;
     }
 }
 
@@ -113,7 +113,7 @@ export const removeSavedScholarship = async (scholarship_data) =>
     }
     catch (error)
     {
-        throw new Error(error.message) ;
+        throw new Error(`Server Error: ${error.message}`) ;
     }
 }
 
@@ -131,7 +131,7 @@ export const postSavedSchools = async (school_data) =>
     }
     catch (error)
     {
-        throw new Error(error.message) ;
+        throw new Error(`Server Error: ${error.message}`) ;
     }
 }
 
@@ -143,6 +143,6 @@ export const removeSavedSchool = async (school_data) =>
     }
     catch (error)
     {
-        throw new Error(error.message) ;
+        throw new Error(`Server Error: ${error.message}`) ;
     }
 }
