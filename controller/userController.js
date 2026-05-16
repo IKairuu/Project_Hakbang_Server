@@ -35,7 +35,7 @@ export const loginUser = async (req, res) =>
         switch (error.message)
         {
             case "INVALID_EMAIL_PASSWORD":
-                return res.status(400).json({message: "Invalid email or password", status: 400}) ;
+                return res.status(201).json({message: "Invalid email or password", status: 201}) ;
             break ;
             case "SERVER_ERROR":
                 return res.status(500).json({message: "Server Error: User data not retrieved", status: 500}) ;
