@@ -7,8 +7,10 @@ import chat from "./routers/chatRouter.js" ;
 import scholar from "./routers/scholarRouter.js" ;
 import center from "./routers/reviewCenterRouter.js" ;
 import { authentication } from "./middleware/auth.js";
+import { limiter } from "./middleware/limiter.js";
 
 app.use(express.json()) ;
+app.use(limiter) ;
 app.use("/auth/college", authentication, college) ;
 app.use("/auth/scholarship", authentication, scholar) ;
 app.use("/auth/review-hub", authentication, center) ;

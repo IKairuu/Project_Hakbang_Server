@@ -1,11 +1,12 @@
 import express from "express";
 import {authentication} from "../middleware/auth.js" ;
 import { addUserActivity, changeAboutUser, getUserActivity, getUserSavedScholarships, getUserSavedSchools, loginUser, postUserSavedScholarship, postUserSavedSchools, registerUser, removeUserActivity, removeUserSavedScholarship, removeUserSavedSchool } from "../controller/userController.js";
+import { loginLimiter } from "../middleware/limiter.js";
 
 const user = express.Router() ;
 
 user.post("/signup", registerUser) ; 
-user.post("/login", loginUser) ;
+user.post("/login", loginLimiter, loginUser) ;
 user.put("/auth/change-about-me", authentication, changeAboutUser) ;
 user.post("/auth/post-activity", authentication, addUserActivity) ;
 user.get("/auth/get-activities/:email", authentication, getUserActivity) ;
