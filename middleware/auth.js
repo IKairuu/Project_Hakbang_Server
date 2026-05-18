@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken" ;
 import * as dotenv from "dotenv" ;
+import { OAuth2Client } from "google-auth-library";
 dotenv.config() ;
 
 
-export function authentication(req, res, next) {
+export function authorization(req, res, next) {
         const header = req.headers.authorization ;
         if (!header)
         {
@@ -22,7 +23,6 @@ export function authentication(req, res, next) {
             req.user = user ;
             next() ;
         }) ;
-        
     } ;
 
 

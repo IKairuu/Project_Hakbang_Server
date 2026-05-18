@@ -9,7 +9,7 @@ export const register = async (user_data) =>
     {
         throw new Error("EMAIL_IN_USE") ;
     }
-
+    //TODO authentication here
     const saltRounds = 10 ;
     const salt = await bcrypt.genSalt(saltRounds) ;
     const hashed_password = await bcrypt.hash(user_data.password, salt) ;
@@ -33,7 +33,7 @@ export const login = async (user_data) =>
     {
         throw new Error("INVALID_EMAIL_PASSWORD") ;
     }
-    //TODO authentication here
+    
     let data = await db_get_user_data(verify.email) ;
     if (data == null)
     {
