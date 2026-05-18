@@ -9,7 +9,7 @@ export const register = async (user_data) =>
     {
         throw new Error("EMAIL_IN_USE") ;
     }
-    //TODO authentication here
+    //TODO authentication here with token
     const saltRounds = 10 ;
     const salt = await bcrypt.genSalt(saltRounds) ;
     const hashed_password = await bcrypt.hash(user_data.password, salt) ;
