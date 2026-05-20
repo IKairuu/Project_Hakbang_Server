@@ -1,10 +1,5 @@
-import nodemailer from "nodemailer" ;
 import * as dotenv from "dotenv" ;
-import dns from "dns" ;
+import { Resend } from "resend" ;
 dotenv.config() ;
 
-dns.setDefaultResultOrder("ipv4first");
-export const transporter = nodemailer.createTransport({host:"smtp.gmail.com", port: 465, secure: true, auth: {
-    user:process.env.GMAIL_USER,
-    pass:process.env.GMAIL_PASSWORD
-}, connectionTimeout: 10000})
+export const resend = new Resend(process.env.RESEND_API) ;

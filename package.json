@@ -31,6 +31,7 @@
     "google-auth-library": "^10.6.2",
     "jsonwebtoken": "^9.0.3",
     "nodemailer": "^8.0.7",
+    "resend": "^6.12.3",
     "yarn": "^1.22.22"
   }
 }
