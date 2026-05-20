@@ -11,6 +11,7 @@ import { limiter } from "./middleware/limiter.js";
 
 app.use(express.json()) ;
 app.use(limiter) ;
+app.set('trust proxy', 1);
 app.use("/auth/college", authorization, college) ;
 app.use("/auth/scholarship", authorization, scholar) ;
 app.use("/auth/review-hub", authorization, center) ;
