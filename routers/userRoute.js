@@ -5,7 +5,7 @@ import { loginLimiter } from "../middleware/limiter.js";
 
 const user = express.Router() ;
 
-user.post("/signup", registerUser) ; 
+user.post("/auth/signup", authorization, registerUser) ; 
 user.post("/login", loginLimiter, loginUser) ;
 user.put("/auth/change-about-me", authorization, changeAboutUser) ;
 user.post("/auth/post-activity", authorization, addUserActivity) ;
@@ -17,7 +17,7 @@ user.post("/auth/remove-saved-scholarship", authorization, removeUserSavedSchola
 user.get("/auth/get-saved-schools/:email", authorization, getUserSavedSchools) ;
 user.post("/auth/post-saved-schools", authorization, postUserSavedSchools) ;
 user.post("/auth/remove-saved-school", authorization, removeUserSavedSchool) ;
-user.post("/auth-user-email/:email", sendCodeUser)  ;
+user.post("/auth-user-email/:email",sendCodeUser)  ;
 user.post("/verify", verifyUser)  ;
 
 export default user ;

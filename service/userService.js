@@ -32,7 +32,7 @@ export const sendToken = async (email) =>
 {
 try {
     const code = Math.floor(100000 + Math.random() * 900000).toString() ;
-    const token =  jwt.sign({email: email, code: code}, process.env.JWT_SECRET_KEY,  {expiresIn: "5m"})  ;
+    const token =  jwt.sign({email: email, code: code}, process.env.JWT_SECRET_KEY,  {expiresIn: "10m"})  ;
     const info = await transporter.sendMail({
         from: '"Hakbang Team" <team@example.com>', 
         to: email, 
