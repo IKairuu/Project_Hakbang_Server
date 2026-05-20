@@ -37,7 +37,7 @@ try {
     const message = {
       sender: {
         name: "Team Hakbang",
-        email: "hakbangapp@gmail.com", // must be verified
+        email: "hakbangapp@gmail.com",
       },
       to: [{ email: email }],
       subject: "Account Verification",
