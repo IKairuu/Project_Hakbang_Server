@@ -1,5 +1,9 @@
 import * as dotenv from "dotenv" ;
-import { Resend } from "resend" ;
+import  SibApiV3Sdk  from "sib-api-v3-sdk";
 dotenv.config() ;
 
-export const resend = new Resend(process.env.RESEND_API) ;
+const client = SibApiV3Sdk.ApiClient.instance ;
+client.authentications["api-key"].apiKey = process.env.BREVO_API ;
+
+export const emailApi = new SibApiV3Sdk.TransactionalEmailsApi() ;
+
