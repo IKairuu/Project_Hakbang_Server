@@ -33,8 +33,8 @@ export const sendToken = async (email) =>
 try {
     const code = Math.floor(100000 + Math.random() * 900000).toString() ;
     const token =  jwt.sign({email: email, code: code}, process.env.JWT_SECRET_KEY,  {expiresIn: "10m"})  ;
-    resend.emails.send({
-    from: process.env.GMAIL_USER,
+    await resend.emails.send({
+    from: 'onboarding@resend.dev',
     to: email,
     subject: "Account Verification",
     html: `
