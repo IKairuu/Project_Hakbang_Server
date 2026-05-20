@@ -48,7 +48,7 @@ try {
            Thanks,</p>
     `
     });
-    return {token : token} ;
+    return token ;
     } catch (err) {
         throw new Error(`Server Error: Email Verification failed ${err}`) ;
     }
