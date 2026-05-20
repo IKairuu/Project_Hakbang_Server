@@ -50,7 +50,7 @@ try {
     });
     return {token : token} ;
     } catch (err) {
-        throw new Error("Server Error: Email Verification failed") ;
+        throw new Error(`Server Error: Email Verification failed ${err}`) ;
     }
 }
 
