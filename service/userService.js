@@ -1,6 +1,8 @@
 import bcrypt  from "bcrypt" ;
 import User from "../model/user.js";
 import jwt from "jsonwebtoken" ;
+import nodemailer from "nodemailer" ;
+import  {  transporter } from "../config/mailer_config.js" ;
 import { db_add_user, db_change_about_me, db_get_activities, db_get_saved_scholarships, db_get_saved_schools, db_get_user_data, db_getAllUsers, db_login_user, db_post_activity, db_post_saved_scholarship, db_post_saved_schools, db_remove_saved_scholarship, db_remove_saved_school, db_remove_user_activity } from "../repository/userRepository.js";
 
 export const register = async (user_data) =>
@@ -9,7 +11,7 @@ export const register = async (user_data) =>
     {
         throw new Error("EMAIL_IN_USE") ;
     }
-    //TODO authentication here with token
+
     const saltRounds = 10 ;
     const salt = await bcrypt.genSalt(saltRounds) ;
     const hashed_password = await bcrypt.hash(user_data.password, salt) ;
@@ -24,6 +26,49 @@ export const register = async (user_data) =>
     {
         throw new Error("Server Error: Registration Failed") ;
     }    
+}
+
+export const sendToken = async (email) =>
+{
+try {
+    const code = Math.floor(100000 + Math.random() * 900000).toString() ;
+    const token =  jwt.sign({email: email, code: code}, process.env.JWT_SECRET_KEY,  {expiresIn: "5m"})  ;
+    const info = await transporter.sendMail({
+        from: '"Hakbang Team" <team@example.com>', 
+        to: email, 
+        subject: "Account Verification", 
+        html:  `
+        <h1>Hakbang Account Verification</h1>
+        <p>Your code is:</p>
+        <h2>${code}</h2>
+
+        <p>If you didn’t ask for this code, you can ignore this email or check
+           your account for actions.
+
+           Thanks,</p>
+    `, 
+    });
+    return {token : token} ;
+    } catch (err) {
+        throw new Error("Server Error: Email Verification failed") ;
+    }
+}
+
+export const verifyToken= async (user_data) =>
+{
+    let verify = jwt.verify(user_data["token"], process.env.JWT_SECRET_KEY)  ;
+
+    if (verify == null)
+    {
+        throw  new Error("Token Error: There is no token") ;
+    }
+
+    if (verify.code != user_data["code"])
+    {
+        throw  new Error("Invalid Code") ;
+    }
+
+    return true ;
 }
 
 export const login = async (user_data) =>

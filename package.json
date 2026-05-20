@@ -30,6 +30,7 @@
     "genai": "^0.0.18",
     "google-auth-library": "^10.6.2",
     "jsonwebtoken": "^9.0.3",
+    "nodemailer": "^8.0.7",
     "yarn": "^1.22.22"
   }
 }

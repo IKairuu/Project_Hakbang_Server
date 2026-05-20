@@ -8,7 +8,7 @@ export function authorization(req, res, next) {
         const header = req.headers.authorization ;
         if (!header)
         {
-            return res.status(400).json({message: "Token Error: There is no token", status: 402}) ;
+            return res.status(400).json({message: "Token Error: There is no token", status: 400}) ;
         }
 
         const token = header.split(" ")[1] ;
