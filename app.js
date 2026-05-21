@@ -6,13 +6,16 @@ import college from "./routers/collegeRouter.js" ;
 import chat from "./routers/chatRouter.js" ;
 import scholar from "./routers/scholarRouter.js" ;
 import center from "./routers/reviewCenterRouter.js" ;
-import { authentication } from "./middleware/auth.js";
+import { authorization } from "./middleware/auth.js";
+import { limiter } from "./middleware/limiter.js";
 
 app.use(express.json()) ;
-app.use("/auth/college", authentication, college) ;
-app.use("/auth/scholarship", authentication, scholar) ;
-app.use("/auth/review-hub", authentication, center) ;
-app.use("/auth/chat", authentication,chat) ;
+app.use(limiter) ;
+app.set('trust proxy', 1);
+app.use("/auth/college", authorization, college) ;
+app.use("/auth/scholarship", authorization, scholar) ;
+app.use("/auth/review-hub", authorization, center) ;
+app.use("/auth/chat", authorization,chat) ;
 app.use("/user", user) ;
 
 export default app ;

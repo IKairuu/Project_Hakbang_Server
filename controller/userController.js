@@ -1,4 +1,4 @@
-import { changeAboutMe, getActivity, getSavedScholarships, login, postActivity, register, removeActivity, postSavedScholarship, removeSavedScholarship, getSavedSchools, postSavedSchools, removeSavedSchool } from "../service/userService.js";
+import { changeAboutMe, getActivity, getSavedScholarships, login, postActivity, register, removeActivity, postSavedScholarship, removeSavedScholarship, getSavedSchools, postSavedSchools, removeSavedSchool, sendToken, verifyToken } from "../service/userService.js";
 
 export const registerUser = async (req, res) =>
 {
@@ -19,6 +19,34 @@ export const registerUser = async (req, res) =>
             return res.status(500).json({message: error.message, status:500}) ;
         }
         
+    }
+}
+
+export const sendCodeUser = async (req, res) =>
+{
+    let data = req.params.email ;
+    try
+    {   
+        let token = await sendToken(data) ;
+        return res.status(200).json({message: "Code sent to email", token: token,status: 200})
+    }
+    catch (error)
+    {
+        return res.status(500).json({message: error.message, status: 500}) ;
+    }
+}
+
+export const verifyUser = async (req, res)  =>
+{
+    let data = req.body ;
+    try
+    {   
+        let verification = await verifyToken(data) ;
+        return res.status(200).json({message: "Verification  Successfull", verified: verification, status: 200})
+    }
+    catch (error)
+    {
+        return res.status(500).json({message: error.message, status: 500}) ;
     }
 }
 

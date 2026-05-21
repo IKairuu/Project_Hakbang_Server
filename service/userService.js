@@ -1,6 +1,8 @@
 import bcrypt  from "bcrypt" ;
 import User from "../model/user.js";
 import jwt from "jsonwebtoken" ;
+import nodemailer from "nodemailer" ;
+import  { emailApi } from "../config/mailer_config.js" ;
 import { db_add_user, db_change_about_me, db_get_activities, db_get_saved_scholarships, db_get_saved_schools, db_get_user_data, db_getAllUsers, db_login_user, db_post_activity, db_post_saved_scholarship, db_post_saved_schools, db_remove_saved_scholarship, db_remove_saved_school, db_remove_user_activity } from "../repository/userRepository.js";
 
 export const register = async (user_data) =>
@@ -26,6 +28,55 @@ export const register = async (user_data) =>
     }    
 }
 
+export const sendToken = async (email) =>
+{
+try {
+    const code = Math.floor(100000 + Math.random() * 900000).toString() ;
+    const token =  jwt.sign({email: email, code: code}, process.env.JWT_SECRET_KEY,  {expiresIn: "10m"})  ;
+
+    const message = {
+      sender: {
+        name: "Team Hakbang",
+        email: "hakbangapp@gmail.com",
+      },
+      to: [{ email: email }],
+      subject: "Account Verification",
+      htmlContent: `
+        <h1>Hakbang Account Verification</h1>
+        <p>Your code is:</p>
+        <h2>${code}</h2>
+
+        <p>If you didn’t ask for this code, you can ignore this email or check
+           your account for actions.
+
+           Thanks,</p>
+    `,
+    };
+    emailApi.sendTransacEmail(message) ;
+    
+    return token ;
+    } catch (err) {
+        throw new Error(`Server Error: Email Verification failed ${err}`) ;
+    }
+}
+
+export const verifyToken= async (user_data) =>
+{
+    let verify = jwt.verify(user_data["token"], process.env.JWT_SECRET_KEY)  ;
+
+    if (verify == null)
+    {
+        throw  new Error("Token Error: There is no token") ;
+    }
+
+    if (verify.code != user_data["code"])
+    {
+        throw  new Error("Invalid Code") ;
+    }
+
+    return true ;
+}
+
 export const login = async (user_data) =>
 {
     let verify = await db_login_user(user_data.email) ;
@@ -33,7 +84,7 @@ export const login = async (user_data) =>
     {
         throw new Error("INVALID_EMAIL_PASSWORD") ;
     }
-    //TODO authentication here
+    
     let data = await db_get_user_data(verify.email) ;
     if (data == null)
     {
