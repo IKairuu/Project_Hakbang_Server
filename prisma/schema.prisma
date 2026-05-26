@@ -13,38 +13,88 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
-  name String
-  email String @unique
-  password String
-  role String 
-  occupation String
+  id          String @id @default(uuid())
+  name        String
+  email       String @unique
+  password    String
+  role        String
+  occupation  String
   institution String
-  grade String
-  avatar String
-  about_me String
+  grade       String
+  avatar      String
+  about_me    String
 
   createdAt DateTime @default(now())
 }
 
-model College{
-  id String @id @default(uuid())
-  about String
-  address String
-  college_image String
-  college_name String
-  email String
-  fb_page String
-  latitude Float
-  logo_link String
-  longitude Float
+model College {
+  id              String   @id @default(uuid())
+  college_name    String   @unique
+  type            String
+  about           String
+  address         String
+  college_image   String
+  email           String
+  fb_page         String
+  latitude        Float
+  longitude       Float
+  logo_link       String
   program_numbers Int
   program_offered String[]
-  ranking Int
-  rating Float
-  tags String[]
-  telephone String
-  type String
+  ranking         Int
+  rating          Float
+  tags            String[]
+  telephone       String
 }
 
+model Scholarship {
+  id                   String   @id @default(uuid())
+  scholarship_name     String
+  scholarship_icon     String
+  allowance            String
+  about                String
+  application_steps    String[]
+  application_timeline Json[]
+  benefits             Json[]
+  color                String
+  start_time           DateTime
+  end_time             DateTime
+  duration             Int
+  eligibility          String[]
+  government           Boolean
+  grant_title          Json
+  min_gwa              Float
+  organization_name    Json
+  required_documents   String[]
+  service_obligation   Json
+  tags                 String[]
+  likes                Int
+  website              String
+}
 
+model Center {
+  id              String   @id @default(uuid())
+  title           String   @unique
+  subtitle        String
+  instructor      String
+  managed_by      String
+  about_center    Json
+  program_overvew Json
+  offers          String[]
+  coverage        String[]
+  description     String
+  email           String
+  emoji           String
+  exams           String[]
+  best_seller     Boolean
+  location        String
+  modalities      String
+  current_price   Float
+  last_price      Float?
+  phone           String
+  rating_count    Int
+  rating_num      Float
+  stars           String?
+  website         String
+  beneficiaries   String[]
+}
