@@ -11,3 +11,40 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model User {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+  role String 
+  occupation String
+  institution String
+  grade String
+  avatar String
+  about_me String
+
+  createdAt DateTime @default(now())
+}
+
+model College{
+  id String @id @default(uuid())
+  about String
+  address String
+  college_image String
+  college_name String
+  email String
+  fb_page String
+  latitude Float
+  logo_link String
+  longitude Float
+  program_numbers Int
+  program_offered String[]
+  ranking Int
+  rating Float
+  tags String[]
+  telephone String
+  type String
+}
+
+
