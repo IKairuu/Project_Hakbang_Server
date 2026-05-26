@@ -8,6 +8,9 @@ import scholar from "./routers/scholarRouter.js" ;
 import center from "./routers/reviewCenterRouter.js" ;
 import { authorization } from "./middleware/auth.js";
 import { limiter } from "./middleware/limiter.js";
+import { connect_database} from "./config/database_config.js";
+
+connect_database() ;
 
 app.use(express.json()) ;
 app.use(limiter) ;
