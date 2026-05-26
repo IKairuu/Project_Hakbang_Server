@@ -24,9 +24,10 @@ model User {
   avatar      String
   about_me    String
 
-  createdAt    DateTime       @default(now())
-  activities   Activity[]
-  savedSchools Saved_School[]
+  createdAt         DateTime            @default(now())
+  activities        Activity[]
+  savedSchools      Saved_School[]
+  savedScholarships Saved_Scholarship[]
 }
 
 model College {
@@ -51,7 +52,7 @@ model College {
 }
 
 model Scholarship {
-  id                   String   @id @default(uuid())
+  id                   String              @id @default(uuid())
   scholarship_name     String
   scholarship_icon     String
   allowance            String
@@ -73,6 +74,7 @@ model Scholarship {
   tags                 String[]
   likes                Int
   website              String
+  savedScholarships    Saved_Scholarship[]
 }
 
 model Center {
@@ -116,4 +118,12 @@ model Saved_School {
   college_id String
   user       User    @relation(fields: [user_id], references: [id])
   college    College @relation(fields: [college_id], references: [id])
+}
+
+model Saved_Scholarship {
+  id             String      @id @default(uuid())
+  user_id        String
+  scholarship_id String
+  user           User        @relation(fields: [user_id], references: [id])
+  scholarship    Scholarship @relation(fields: [scholarship_id], references: [id])
 }
