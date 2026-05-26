@@ -34,14 +34,10 @@ export async function db_getAllUsers() {
 }
 
 export async function db_login_user(email) {
-  let data = null;
-  const querySnapshot = await getDocs(collection(database, "users"));
-  for (const doc of querySnapshot.docs) {
-    let user = doc.data();
-    if (user.email == email) {
-      data = { email: user.email, password: user.password };
-    }
-  }
+  const data = await prisma.user.findFirst({
+    where: { email: email },
+    select: { email: true, password: true },
+  });
   return data;
 }
 

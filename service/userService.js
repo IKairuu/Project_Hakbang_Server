@@ -123,6 +123,7 @@ export const login = async (user_data) => {
       avatar: data.avatar,
       occupation: data.occupation,
       institution: data.institution,
+      role: data.role,
       grade: data.grade,
       about_me: data.about_me,
     },
