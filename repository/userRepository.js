@@ -8,7 +8,6 @@ import {
 } from "firebase/firestore";
 import { database } from "../config/firebase_config.js";
 import { prisma } from "../config/database_config.js";
-import User from "../model/user.js";
 
 export async function db_add_user(user) {
   try {
@@ -21,7 +20,6 @@ export async function db_add_user(user) {
         occupation: user.occupation,
         institution: user.institution,
         grade: user.grade,
-        role: user.role,
         about_me: user.about_me,
       },
     });
@@ -48,24 +46,10 @@ export async function db_login_user(email) {
 }
 
 export async function db_get_user_data(email) {
-  const querySnapshot = await getDocs(collection(database, "users"));
-  for (const doc of querySnapshot.docs) {
-    let user_data = doc.data();
-    if (email == user_data.email) {
-      return new User(
-        user_data.name,
-        user_data.email,
-        user_data.password,
-        user_data.avatar,
-        user_data.occupation,
-        user_data.institution,
-        user_data.grade,
-        user_data.role,
-        user_data.about_me,
-      );
-    }
-  }
-  return null;
+  const user = await prisma.user.findFirst({
+    where: { email: email },
+  });
+  return user;
 }
 
 export async function db_change_about_me(email, new_about_me) {

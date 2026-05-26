@@ -1,5 +1,4 @@
 import bcrypt from "bcrypt";
-import User from "../model/user.js";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import { emailApi } from "../config/mailer_config.js";
@@ -31,17 +30,16 @@ export const register = async (user_data) => {
   const salt = await bcrypt.genSalt(saltRounds);
   const hashed_password = await bcrypt.hash(user_data.password, salt);
 
-  const user = new User(
-    user_data.name,
-    user_data.email,
-    hashed_password,
-    user_data.avatar,
-    user_data.occupation,
-    user_data.institution,
-    user_data.grade,
-    user_data.role,
-    user_data.about_me,
-  );
+  const user = {
+    name: user_data.name,
+    email: user_data.email,
+    password_hash: hashed_password,
+    avatar: user_data.avatar,
+    occupation: user_data.occupation,
+    institution: user_data.institution,
+    grade: user_data.grade,
+    about_me: user_data.about_me,
+  };
 
   try {
     await db_add_user(user);
@@ -126,7 +124,6 @@ export const login = async (user_data) => {
       occupation: data.occupation,
       institution: data.institution,
       grade: data.grade,
-      role: data.role,
       about_me: data.about_me,
     },
     token: accessToken,
