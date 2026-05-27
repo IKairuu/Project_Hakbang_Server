@@ -49,16 +49,10 @@ export async function db_get_user_data(email) {
 }
 
 export async function db_change_about_me(email, new_about_me) {
-  const querySnapshot = await getDocs(collection(database, "users"));
-  for (const docs of querySnapshot.docs) {
-    let user_id = docs.id;
-    let user = docs.data();
-    if (email == user.email) {
-      await updateDoc(doc(database, "users", user_id), {
-        about_me: new_about_me,
-      });
-    }
-  }
+  const change = await prisma.user.update({
+    where: { email: email },
+    data: { about_me: new_about_me },
+  });
 }
 
 export async function db_post_activity(activity) {
