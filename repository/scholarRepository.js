@@ -1,14 +1,8 @@
-import { database } from "../config/firebase_config.js" ;
-import { getDocs, collection } from "firebase/firestore"; 
+import { database } from "../config/firebase_config.js";
+import { getDocs, collection } from "firebase/firestore";
+import { prisma } from "../config/database_config.js";
 
-export async function db_scholarships()
-{
-    let scholarships = [] ;
-    const querySnapshot = await getDocs(collection(database, "scholarships"));
-    for (const doc of querySnapshot.docs)
-    {
-        let scholar = doc.data() ;
-        scholarships.push(scholar) ;
-    }
-    return scholarships ;
+export async function db_scholarships() {
+  const scholarships = await prisma.scholarship.findMany();
+  return scholarships;
 }
