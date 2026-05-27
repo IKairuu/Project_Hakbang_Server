@@ -65,47 +65,46 @@ model Scholarship {
   application_timeline Json[]
   benefits             Json[]
   color                String
-  start_time           DateTime
-  end_time             DateTime
-  duration             Int
+  start_time           DateTime?
+  end_time             DateTime?
+  duration             Int?
   eligibility          String[]
   government           Boolean
   grant_title          Json
-  min_gwa              Float
+  min_gwa              Float?
   organization_name    Json
   required_documents   String[]
-  service_obligation   Json
+  service_obligation   Json?
   tags                 String[]
-  likes                Int
+  likes                Int                @default(0)
   website              String
   savedScholarships    SavedScholarship[]
 }
 
 model Center {
-  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Text
-  title           String   @unique
-  subtitle        String
-  instructor      String
-  managed_by      String
-  about_center    Json
-  program_overvew Json
-  offers          String[]
-  coverage        String[]
-  description     String
-  email           String
-  emoji           String
-  exams           String[]
-  best_seller     Boolean
-  location        String
-  modalities      String
-  current_price   Float
-  last_price      Float?
-  phone           String
-  rating_count    Int
-  rating_num      Float
-  stars           String?
-  website         String
-  beneficiaries   String[]
+  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Text
+  title            String   @unique
+  subtitle         String
+  instructor       String
+  managed_by       String
+  about_center     Json
+  program_overview Json
+  offers           String[]
+  coverage         String[]
+  description      String
+  email            String
+  emoji            String
+  exams            String[]
+  location         String
+  modalities       String?
+  current_price    Float
+  last_price       Float?
+  phone            String
+  rating_count     Int?
+  rating_num       Float?
+  stars            String?
+  website          String
+  beneficiaries    String[]
 }
 
 model Activity {
