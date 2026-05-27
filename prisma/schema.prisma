@@ -70,7 +70,7 @@ model Scholarship {
   duration             Int?
   eligibility          String[]
   government           Boolean
-  grant_title          Json
+  grant_title          Json?
   min_gwa              Float?
   organization_name    Json
   required_documents   String[]
