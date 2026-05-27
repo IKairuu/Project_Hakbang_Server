@@ -100,9 +100,8 @@ model Center {
   current_price    Float
   last_price       Float?
   phone            String
-  rating_count     Int?
-  rating_num       Float?
-  stars            String?
+  rating_count     Int      @default(0)
+  rating_num       Float    @default(0.0)
   website          String
   beneficiaries    String[]
 }
