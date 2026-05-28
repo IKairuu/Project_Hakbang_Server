@@ -87,15 +87,10 @@ export async function db_get_saved_scholarships(email) {
   return scholars;
 }
 
-export async function db_post_saved_scholarship(scholarship_data) {
-  try {
-    const doc_data = await addDoc(collection(database, "saved_scholarships"), {
-      scholarship_name: scholarship_data.scholarship_name,
-      email: scholarship_data.email,
-    });
-  } catch (error) {
-    throw Error(`Database Error: ${error.message}`);
-  }
+export async function db_post_saved_scholarship(scholarship_id, id) {
+  const post = await prisma.savedScholarship.create({
+    data: { scholarship_id: scholarship_id.scholarship_id, user_id: id },
+  });
 }
 
 export async function db_remove_saved_scholarship(scholarship_data) {

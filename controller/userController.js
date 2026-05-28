@@ -23,13 +23,7 @@ export const registerUser = async (req, res) => {
       .status(200)
       .json({ message: "Registration Successfull", status: 200 });
   } catch (error) {
-    if (error.message == "EMAIL_IN_USE") {
-      return res
-        .status(400)
-        .json({ message: "Email already in use", status: 400 });
-    } else {
-      return res.status(500).json({ message: error.message, status: 500 });
-    }
+    return res.status(500).json({ message: error.message, status: 500 });
   }
 };
 
@@ -144,8 +138,9 @@ export const getUserSavedScholarships = async (req, res) => {
 
 export const postUserSavedScholarship = async (req, res) => {
   let scholar = req.body;
+  const token = req.headers.authorization;
   try {
-    await postSavedScholarship(scholar);
+    await postSavedScholarship(scholar, token);
     return res.status(200).json({ message: "Successfully saved", status: 200 });
   } catch (error) {
     return res.status(500).json({ message: error.message, status: 500 });

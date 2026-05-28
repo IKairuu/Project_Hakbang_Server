@@ -174,9 +174,11 @@ export const getSavedScholarships = async (email) => {
   return saved;
 };
 
-export const postSavedScholarship = async (scholarship_data) => {
+export const postSavedScholarship = async (scholarship_id, token) => {
+  const filteredToken = token.split(" ")[1];
+  const user = jwt.verify(filteredToken, process.env.JWT_SECRET_KEY);
   try {
-    await db_post_saved_scholarship(scholarship_data);
+    await db_post_saved_scholarship(scholarship_id, user.data);
   } catch (error) {
     throw new Error(`Server Error: ${error.message}`);
   }
