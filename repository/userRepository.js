@@ -1,4 +1,3 @@
-import { database } from "../config/firebase_config.js";
 import { prisma } from "../config/database_config.js";
 
 export async function db_add_user(user) {
