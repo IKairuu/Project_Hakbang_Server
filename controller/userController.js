@@ -113,9 +113,9 @@ export const getUserActivity = async (req, res) => {
 };
 
 export const removeUserActivity = async (req, res) => {
-  let email = req.params.email;
+  const token = req.headers.authorization;
   try {
-    await removeActivity(email);
+    await removeActivity(token);
     return res
       .status(200)
       .json({ message: "Successfully cleared", status: 200 });

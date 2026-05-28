@@ -158,9 +158,11 @@ export const getActivity = async (id) => {
   return activities;
 };
 
-export const removeActivity = async (email) => {
+export const removeActivity = async (token) => {
+  const filteredToken = token.split(" ")[1];
+  const user = jwt.verify(filteredToken, process.env.JWT_SECRET_KEY);
   try {
-    await db_remove_user_activity(email);
+    await db_remove_user_activity(user.data);
   } catch (error) {
     throw new Error(`Server Error: ${error.message}`);
   }
