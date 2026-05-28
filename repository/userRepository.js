@@ -118,16 +118,11 @@ export async function db_remove_saved_scholarship(scholarship_data) {
   }
 }
 
-export async function db_get_saved_schools(email) {
-  let schools = [];
-  const querySnapshot = await getDocs(collection(database, "saved_schools"));
-
-  for (const doc of querySnapshot.docs) {
-    let saved = doc.data();
-    if (email == saved.email) {
-      schools.push(saved);
-    }
-  }
+export async function db_get_saved_schools(id) {
+  const schools = await prisma.savedSchool.findMany({
+    where: { user_id: id },
+    select: { college_id: true },
+  });
   return schools;
 }
 

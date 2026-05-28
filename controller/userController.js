@@ -165,18 +165,16 @@ export const removeUserSavedScholarship = async (req, res) => {
 };
 
 export const getUserSavedSchools = async (req, res) => {
-  let email = req.params.email;
+  let token = req.headers.authorization;
   try {
-    let schools = await getSavedSchools(email);
+    let schools = await getSavedSchools(token);
     return res.status(200).json({
       message: "Saved Schools successfully retrieved",
       data: schools,
       status: 200,
     });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: `Server Error: ${error.message}`, status: 500 });
+    return res.status(500).json({ message: error.message, status: 500 });
   }
 };
 

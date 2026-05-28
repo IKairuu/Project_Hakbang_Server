@@ -190,8 +190,10 @@ export const removeSavedScholarship = async (scholarship_data) => {
   }
 };
 
-export const getSavedSchools = async (email) => {
-  let saved = await db_get_saved_schools(email);
+export const getSavedSchools = async (token) => {
+  const filteredToken = token.split(" ")[1];
+  const user = jwt.verify(filteredToken, process.env.JWT_SECRET_KEY);
+  let saved = await db_get_saved_schools(user.data);
   return saved;
 };
 
