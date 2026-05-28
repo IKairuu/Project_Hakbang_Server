@@ -195,11 +195,14 @@ export const getSavedSchools = async (email) => {
   return saved;
 };
 
-export const postSavedSchools = async (school_data) => {
+export const postSavedSchools = async (school_id, token) => {
+  const filteredToken = token.split(" ")[1];
+  const user = jwt.verify(filteredToken, process.env.JWT_SECRET_KEY);
   try {
-    await db_post_saved_schools(school_data);
+    await db_post_saved_schools(school_id, user.data);
   } catch (error) {
-    throw new Error(`Server Error: ${error.message}`);
+    console.log(error.message);
+    throw new Error(errorCodes.SERVER.SERVER_06);
   }
 };
 

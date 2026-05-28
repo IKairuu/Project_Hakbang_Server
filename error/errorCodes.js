@@ -13,6 +13,7 @@ export const errorCodes = {
     SERVER_03: "Server Error: Change BIO failed",
     SERVER_04: "Server Error: Post Activity Failed",
     SERVER_05: "Server Error: Remove Activities failed",
+    SERVER_06: "Server Error: Save school failed",
   },
   DATABASE: "Database Error: ",
 };

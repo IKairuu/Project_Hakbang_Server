@@ -182,8 +182,9 @@ export const getUserSavedSchools = async (req, res) => {
 
 export const postUserSavedSchools = async (req, res) => {
   let school_data = req.body;
+  const token = req.headers.authorization;
   try {
-    await postSavedSchools(school_data);
+    await postSavedSchools(school_data, token);
     return res.status(200).json({ message: "Successfully saved", status: 200 });
   } catch (error) {
     return res.status(500).json({ message: error.message, status: 500 });
