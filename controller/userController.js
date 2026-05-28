@@ -147,9 +147,10 @@ export const postUserSavedScholarship = async (req, res) => {
 };
 
 export const removeUserSavedScholarship = async (req, res) => {
-  let scholar = req.body;
+  let scholar_id = req.params.scholarship_id;
+  const token = req.headers.authorization;
   try {
-    await removeSavedScholarship(scholar);
+    await removeSavedScholarship(scholar_id, token);
     return res
       .status(200)
       .json({ message: "Successfully removed", status: 200 });

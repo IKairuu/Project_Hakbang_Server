@@ -149,6 +149,7 @@ export const postActivity = async (activity_details, token) => {
   try {
     await db_post_activity(data);
   } catch (error) {
+    console.log(error.message);
     throw new Error(errorCodes.SERVER.SERVER_04);
   }
 };
@@ -164,7 +165,7 @@ export const removeActivity = async (token) => {
   try {
     await db_remove_user_activity(user.data);
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     throw new Error(errorCodes.SERVER.SERVER_05);
   }
 };
@@ -182,15 +183,19 @@ export const postSavedScholarship = async (scholarship_id, token) => {
   try {
     await db_post_saved_scholarship(scholarship_id, user.data);
   } catch (error) {
+    console.log(error.message);
     throw new Error(errorCodes.SERVER.SERVER_07);
   }
 };
 
-export const removeSavedScholarship = async (scholarship_data) => {
+export const removeSavedScholarship = async (scholarship_id, token) => {
+  const filteredToken = token.split(" ")[1];
+  const user = jwt.verify(filteredToken, process.env.JWT_SECRET_KEY);
   try {
-    await db_remove_saved_scholarship(scholarship_data);
+    await db_remove_saved_scholarship(scholarship_id, user.data);
   } catch (error) {
-    throw new Error(`Server Error: ${error.message}`);
+    console.log(error.message);
+    throw new Error();
   }
 };
 
@@ -218,6 +223,7 @@ export const removeSavedSchool = async (school_id, token) => {
   try {
     await db_remove_saved_school(school_id, user.data);
   } catch (error) {
-    throw new Error(`Server Error: ${error.message}`);
+    console.log(error.message);
+    throw new Error();
   }
 };

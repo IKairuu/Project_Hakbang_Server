@@ -36,8 +36,8 @@ user.post(
   authorization,
   postUserSavedScholarship,
 );
-user.post(
-  "/auth/remove-saved-scholarship",
+user.delete(
+  "/auth/remove-saved-scholarship/:scholarship_id",
   authorization,
   removeUserSavedScholarship,
 );

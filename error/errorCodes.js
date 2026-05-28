@@ -14,7 +14,8 @@ export const errorCodes = {
     SERVER_04: "Server Error: Post Activity Failed",
     SERVER_05: "Server Error: Remove Activities failed",
     SERVER_06: "Server Error: Save school failed",
-    SERVER_07: "Server Error: Save scholarship failed",
+    SERVER_07: "Server Error: Remove saved school failed",
+    SERVER_08: "Server Error: Save scholarship failed",
   },
   DATABASE: "Database Error: ",
 };
