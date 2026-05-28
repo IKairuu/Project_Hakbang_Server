@@ -169,8 +169,10 @@ export const removeActivity = async (token) => {
   }
 };
 
-export const getSavedScholarships = async (email) => {
-  let saved = await db_get_saved_scholarships(email);
+export const getSavedScholarships = async (token) => {
+  const filteredToken = token.split(" ")[1];
+  const user = jwt.verify(filteredToken, process.env.JWT_SECRET_KEY);
+  let saved = await db_get_saved_scholarships(user.data);
   return saved;
 };
 

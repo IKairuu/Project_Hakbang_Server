@@ -119,9 +119,9 @@ export const removeUserActivity = async (req, res) => {
 };
 
 export const getUserSavedScholarships = async (req, res) => {
-  let email = req.params.email;
+  const token = req.headers.authorization;
   try {
-    let scholarships = await getSavedScholarships(email);
+    let scholarships = await getSavedScholarships(token);
     return res.status(200).json({
       message: "Successfully retrieved saved scholarships",
       data: scholarships,
@@ -130,7 +130,6 @@ export const getUserSavedScholarships = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: `Server Error: ${error.message}`,
-      data: scholarships,
       status: 500,
     });
   }

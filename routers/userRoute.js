@@ -27,7 +27,7 @@ user.post("/auth/post-activity", authorization, addUserActivity);
 user.get("/auth/get-activities/:id", authorization, getUserActivity);
 user.delete("/auth/remove-activities", authorization, removeUserActivity);
 user.get(
-  "/auth/get-saved-scholarship/:email",
+  "/auth/get-saved-scholarship",
   authorization,
   getUserSavedScholarships,
 );

@@ -73,17 +73,11 @@ export async function db_remove_user_activity(id) {
   await prisma.activity.deleteMany({ where: { user_id: id } });
 }
 
-export async function db_get_saved_scholarships(email) {
-  let scholars = [];
-  const querySnapshot = await getDocs(
-    collection(database, "saved_scholarships"),
-  );
-  for (const doc of querySnapshot.docs) {
-    let saved = doc.data();
-    if (email == saved.email) {
-      scholars.push(saved);
-    }
-  }
+export async function db_get_saved_scholarships(id) {
+  const scholars = await prisma.savedScholarship.findMany({
+    where: { user_id: id },
+    select: { scholarship_id: true },
+  });
   return scholars;
 }
 
