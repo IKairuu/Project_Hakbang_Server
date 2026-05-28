@@ -48,9 +48,9 @@ export async function db_get_user_data(email) {
   return user;
 }
 
-export async function db_change_about_me(email, new_about_me) {
+export async function db_change_about_me(id, new_about_me) {
   const change = await prisma.user.update({
-    where: { email: email },
+    where: { id: id },
     data: { about_me: new_about_me },
   });
 }

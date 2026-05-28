@@ -111,12 +111,13 @@ export const login = async (user_data) => {
     throw new Error("SERVER_ERROR");
   }
 
-  let accessToken = jwt.sign({ data: data.email }, process.env.JWT_SECRET_KEY, {
+  let accessToken = jwt.sign({ data: data.id }, process.env.JWT_SECRET_KEY, {
     expiresIn: "2h",
   });
 
   return {
     data: {
+      id: data.id,
       name: data.name,
       email: data.email,
       password: data.password_hash,
@@ -133,7 +134,7 @@ export const login = async (user_data) => {
 
 export const changeAboutMe = async (user_data) => {
   try {
-    await db_change_about_me(user_data.email, user_data.about_me);
+    await db_change_about_me(user_data.id, user_data.about_me);
   } catch (error) {
     throw new Error(`Server Error: ${error.message}`);
   }

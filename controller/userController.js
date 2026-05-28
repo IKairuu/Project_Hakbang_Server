@@ -89,10 +89,10 @@ export const loginUser = async (req, res) => {
 
 export const changeAboutUser = async (req, res) => {
   let data = req.body;
-  let email = req.params.email;
+  let id = req.params.id;
   try {
     let response = await changeAboutMe({
-      email: email,
+      id: id,
       about_me: data.about_me,
     });
     return res
