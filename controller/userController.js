@@ -99,9 +99,9 @@ export const addUserActivity = async (req, res) => {
 };
 
 export const getUserActivity = async (req, res) => {
-  let email = req.params.email;
+  let id = req.params.id;
   try {
-    let activities = await getActivity(email);
+    let activities = await getActivity(id);
     return res.status(200).json({
       message: "Successfully retrieved activities",
       data: activities,

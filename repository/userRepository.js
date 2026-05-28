@@ -61,15 +61,11 @@ export async function db_post_activity(activity) {
   });
 }
 
-export async function db_get_activities(email) {
-  let activities = [];
-  const querySnapshot = await getDocs(collection(database, "activity"));
-  for (const doc of querySnapshot.docs) {
-    let act = doc.data();
-    if (act.email == email) {
-      activities.push(act);
-    }
-  }
+export async function db_get_activities(id) {
+  const activities = await prisma.activity.findMany({
+    where: { user_id: id },
+    select: { date: true, description: true },
+  });
   return activities;
 }
 

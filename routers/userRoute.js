@@ -24,7 +24,7 @@ user.post("/auth/signup", authorization, registerUser);
 user.post("/login", loginLimiter, loginUser);
 user.put("/auth/change-about-me/", authorization, changeAboutUser);
 user.post("/auth/post-activity", authorization, addUserActivity);
-user.get("/auth/get-activities/:email", authorization, getUserActivity);
+user.get("/auth/get-activities/:id", authorization, getUserActivity);
 user.delete(
   "/auth/remove-activities/:email",
   authorization,

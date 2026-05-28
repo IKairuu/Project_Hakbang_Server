@@ -153,8 +153,8 @@ export const postActivity = async (activity_details, token) => {
   }
 };
 
-export const getActivity = async (email) => {
-  let activities = await db_get_activities(email);
+export const getActivity = async (id) => {
+  let activities = await db_get_activities(id);
   return activities;
 };
 
