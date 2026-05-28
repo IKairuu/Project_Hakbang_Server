@@ -1,31 +1,19 @@
-import {
-  addDoc,
-  collection,
-  getDocs,
-  updateDoc,
-  doc,
-  deleteDoc,
-} from "firebase/firestore";
 import { database } from "../config/firebase_config.js";
 import { prisma } from "../config/database_config.js";
 
 export async function db_add_user(user) {
-  try {
-    const createUser = await prisma.user.create({
-      data: {
-        name: user.name,
-        email: user.email,
-        password: user.password_hash,
-        avatar: user.avatar,
-        occupation: user.occupation,
-        institution: user.institution,
-        grade: user.grade,
-        about_me: user.about_me,
-      },
-    });
-  } catch (error) {
-    throw new Error(`Database error: ${error.message}`);
-  }
+  const createUser = await prisma.user.create({
+    data: {
+      name: user.name,
+      email: user.email,
+      password: user.password_hash,
+      avatar: user.avatar,
+      occupation: user.occupation,
+      institution: user.institution,
+      grade: user.grade,
+      about_me: user.about_me,
+    },
+  });
 }
 
 export async function db_getAllUsers() {
