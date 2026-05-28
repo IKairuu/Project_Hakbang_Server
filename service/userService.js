@@ -164,7 +164,8 @@ export const removeActivity = async (token) => {
   try {
     await db_remove_user_activity(user.data);
   } catch (error) {
-    throw new Error(`Server Error: ${error.message}`);
+    console.log(error);
+    throw new Error(errorCodes.SERVER.SERVER_05);
   }
 };
 
