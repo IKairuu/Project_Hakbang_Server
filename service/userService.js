@@ -142,11 +142,14 @@ export const changeAboutMe = async (user_data) => {
   }
 };
 
-export const postActivity = async (activity_details) => {
+export const postActivity = async (activity_details, token) => {
+  const filteredToken = token.split(" ")[1];
+  const user = jwt.verify(filteredToken, process.env.JWT_SECRET_KEY);
+  let data = { id: user.data, description: activity_details.description };
   try {
-    await db_post_activity(activity_details);
+    await db_post_activity(data);
   } catch (error) {
-    throw new Error(`Server Error: ${error.message}`);
+    throw new Error(errorCodes.SERVER.SERVER_04);
   }
 };
 

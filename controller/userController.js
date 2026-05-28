@@ -89,8 +89,9 @@ export const changeAboutUser = async (req, res) => {
 
 export const addUserActivity = async (req, res) => {
   let activity = req.body;
+  let token = req.headers.authorization;
   try {
-    await postActivity(activity);
+    await postActivity(activity, token);
     return res.status(200).json({ message: "Successfully added", status: 200 });
   } catch (error) {
     return res.status(500).json({ message: error.message, status: 500 });
