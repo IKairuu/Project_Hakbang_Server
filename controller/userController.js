@@ -23,7 +23,9 @@ export const registerUser = async (req, res) => {
       .status(200)
       .json({ message: "Registration Successfull", status: 200 });
   } catch (error) {
-    return res.status(500).json({ message: error.message, status: 500 });
+    return res
+      .status(error.status)
+      .json({ message: error.message, status: error.status });
   }
 };
 
@@ -35,7 +37,9 @@ export const sendCodeUser = async (req, res) => {
       .status(200)
       .json({ message: "Code sent to email", token: token, status: 200 });
   } catch (error) {
-    return res.status(500).json({ message: error.message, status: 500 });
+    return res
+      .status(error.status)
+      .json({ message: error.message, status: error.status });
   }
 };
 
@@ -49,7 +53,9 @@ export const verifyUser = async (req, res) => {
       status: 200,
     });
   } catch (error) {
-    return res.status(500).json({ message: error.message, status: 500 });
+    return res
+      .status(error.status)
+      .json({ message: error.message, status: error.status });
   }
 };
 
@@ -61,7 +67,9 @@ export const loginUser = async (req, res) => {
       .status(200)
       .json({ message: user_data.data, token: user_data.token, status: 200 });
   } catch (error) {
-    return res.status(500).json({ message: error.message, status: 500 });
+    return res
+      .status(error.status)
+      .json({ message: error.message, status: error.status });
   }
 };
 
@@ -77,7 +85,9 @@ export const changeAboutUser = async (req, res) => {
       .status(200)
       .json({ message: "Successfully changed", status: 200 });
   } catch (error) {
-    return res.status(500).json({ message: error.message, status: 500 });
+    return res
+      .status(error.status)
+      .json({ message: error.message, status: error.status });
   }
 };
 
@@ -88,7 +98,9 @@ export const addUserActivity = async (req, res) => {
     await postActivity(activity, token);
     return res.status(200).json({ message: "Successfully added", status: 200 });
   } catch (error) {
-    return res.status(500).json({ message: error.message, status: 500 });
+    return res
+      .status(error.status)
+      .json({ message: error.message, status: error.status });
   }
 };
 
@@ -102,7 +114,9 @@ export const getUserActivity = async (req, res) => {
       status: 200,
     });
   } catch (error) {
-    return res.status(500).json({ message: `Server Error: ${error.message}` });
+    return res
+      .status(error.status)
+      .json({ message: error.message, status: error.status });
   }
 };
 
@@ -114,7 +128,9 @@ export const removeUserActivity = async (req, res) => {
       .status(200)
       .json({ message: "Successfully cleared", status: 200 });
   } catch (error) {
-    return res.status(200).json({ message: error.message, status: 200 });
+    return res
+      .status(error.status)
+      .json({ message: error.message, status: error.status });
   }
 };
 
@@ -128,10 +144,9 @@ export const getUserSavedScholarships = async (req, res) => {
       status: 200,
     });
   } catch (error) {
-    return res.status(500).json({
-      message: `Server Error: ${error.message}`,
-      status: 500,
-    });
+    return res
+      .status(error.status)
+      .json({ message: error.message, status: error.status });
   }
 };
 
@@ -142,7 +157,9 @@ export const postUserSavedScholarship = async (req, res) => {
     await postSavedScholarship(scholar, token);
     return res.status(200).json({ message: "Successfully saved", status: 200 });
   } catch (error) {
-    return res.status(500).json({ message: error.message, status: 500 });
+    return res
+      .status(error.status)
+      .json({ message: error.message, status: error.status });
   }
 };
 
@@ -155,7 +172,9 @@ export const removeUserSavedScholarship = async (req, res) => {
       .status(200)
       .json({ message: "Successfully removed", status: 200 });
   } catch (error) {
-    return res.status(500).json({ message: error.message, status: 500 });
+    return res
+      .status(error.status)
+      .json({ message: error.message, status: error.status });
   }
 };
 
@@ -169,7 +188,9 @@ export const getUserSavedSchools = async (req, res) => {
       status: 200,
     });
   } catch (error) {
-    return res.status(500).json({ message: error.message, status: 500 });
+    return res
+      .status(error.status)
+      .json({ message: error.message, status: error.status });
   }
 };
 
@@ -180,7 +201,9 @@ export const postUserSavedSchools = async (req, res) => {
     await postSavedSchools(school_data, token);
     return res.status(200).json({ message: "Successfully saved", status: 200 });
   } catch (error) {
-    return res.status(500).json({ message: error.message, status: 500 });
+    return res
+      .status(error.status)
+      .json({ message: error.message, status: error.status });
   }
 };
 
@@ -193,6 +216,8 @@ export const removeUserSavedSchool = async (req, res) => {
       .status(200)
       .json({ message: "Successfully removed", status: 200 });
   } catch (error) {
-    return res.status(500).json({ message: error.message, status: 500 });
+    return res
+      .status(error.status)
+      .json({ message: error.message, status: error.status });
   }
 };

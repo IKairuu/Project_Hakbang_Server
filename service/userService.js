@@ -46,7 +46,7 @@ export const register = async (user_data) => {
     await db_add_user(user);
   } catch (error) {
     console.log(error.message);
-    throw new Error(errorCodes.SERVER.SERVER_01);
+    throw errorCodes.SERVER.SERVER_01;
   }
 };
 
@@ -82,7 +82,7 @@ export const sendToken = async (email) => {
     return token;
   } catch (err) {
     console.log(error.message);
-    throw new Error(errorCodes.SERVER.SERVER_02);
+    throw errorCodes.SERVER.SERVER_02;
   }
 };
 
@@ -94,7 +94,7 @@ export const verifyToken = async (user_data) => {
   }
 
   if (verify.code != user_data["code"]) {
-    throw new Error(errorCodes.VERIFICATION.VERI_02);
+    throw errorCodes.VERIFICATION.VERI_02;
   }
 
   return true;
@@ -106,7 +106,7 @@ export const login = async (user_data) => {
     verify == null ||
     !(await bcrypt.compare(user_data.password, verify.password))
   ) {
-    throw new Error(errorCodes.CLIENT.CLIENT_02);
+    throw errorCodes.CLIENT.CLIENT_02;
   }
 
   let data = await db_get_user_data(verify.email);
@@ -138,7 +138,7 @@ export const changeAboutMe = async (user_data) => {
     await db_change_about_me(user.data, user_data.about_me);
   } catch (error) {
     console.log(error.message);
-    throw new Error(errorCodes.SERVER.SERVER_03);
+    throw errorCodes.SERVER.SERVER_03;
   }
 };
 
@@ -150,7 +150,7 @@ export const postActivity = async (activity_details, token) => {
     await db_post_activity(data);
   } catch (error) {
     console.log(error.message);
-    throw new Error(errorCodes.SERVER.SERVER_04);
+    throw errorCodes.SERVER.SERVER_04;
   }
 };
 
@@ -166,7 +166,7 @@ export const removeActivity = async (token) => {
     await db_remove_user_activity(user.data);
   } catch (error) {
     console.log(error.message);
-    throw new Error(errorCodes.SERVER.SERVER_05);
+    throw errorCodes.SERVER.SERVER_05;
   }
 };
 
@@ -184,7 +184,7 @@ export const postSavedScholarship = async (scholarship_id, token) => {
     await db_post_saved_scholarship(scholarship_id, user.data);
   } catch (error) {
     console.log(error.message);
-    throw new Error(errorCodes.SERVER.SERVER_07);
+    throw new errorCodes.SERVER.SERVER_07();
   }
 };
 
@@ -195,7 +195,7 @@ export const removeSavedScholarship = async (scholarship_id, token) => {
     await db_remove_saved_scholarship(scholarship_id, user.data);
   } catch (error) {
     console.log(error.message);
-    throw new Error();
+    throw errorCodes.SERVER.SERVER_09;
   }
 };
 
@@ -213,7 +213,7 @@ export const postSavedSchools = async (school_id, token) => {
     await db_post_saved_schools(school_id, user.data);
   } catch (error) {
     console.log(error.message);
-    throw new Error(errorCodes.SERVER.SERVER_06);
+    throw errorCodes.SERVER.SERVER_06;
   }
 };
 
@@ -224,6 +224,6 @@ export const removeSavedSchool = async (school_id, token) => {
     await db_remove_saved_school(school_id, user.data);
   } catch (error) {
     console.log(error.message);
-    throw new Error();
+    throw errorCodes.SERVER.SERVER_07;
   }
 };
