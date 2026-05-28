@@ -18,12 +18,13 @@ import {
   db_remove_saved_school,
   db_remove_user_activity,
 } from "../repository/userRepository.js";
+import { errorCodes } from "../error/errorCodes.js";
 
 export const register = async (user_data) => {
   if (
     (await db_getAllUsers()).some((value) => value["email"] == user_data.email)
   ) {
-    throw new Error("EMAIL_IN_USE");
+    throw new Error(errorCodes.CLIENT.CLIENT_01);
   }
 
   const saltRounds = 10;
@@ -44,7 +45,8 @@ export const register = async (user_data) => {
   try {
     await db_add_user(user);
   } catch (error) {
-    throw new Error("Server Error: Registration Failed");
+    console.log(error.message);
+    throw new Error(errorCodes.SERVER.SERVER_01);
   }
 };
 
@@ -79,7 +81,8 @@ export const sendToken = async (email) => {
 
     return token;
   } catch (err) {
-    throw new Error(`Server Error: Email Verification failed ${err}`);
+    console.log(error.message);
+    throw new Error(errorCodes.SERVER.SERVER_02);
   }
 };
 
@@ -87,11 +90,11 @@ export const verifyToken = async (user_data) => {
   let verify = jwt.verify(user_data["token"], process.env.JWT_SECRET_KEY);
 
   if (verify == null) {
-    throw new Error("Token Error: There is no token");
+    throw new Error(errorCodes.VERIFICATION.VERI_01);
   }
 
   if (verify.code != user_data["code"]) {
-    throw new Error("Invalid Code");
+    throw new Error(errorCodes.VERIFICATION.VERI_02);
   }
 
   return true;
@@ -103,14 +106,10 @@ export const login = async (user_data) => {
     verify == null ||
     !(await bcrypt.compare(user_data.password, verify.password))
   ) {
-    throw new Error("INVALID_EMAIL_PASSWORD");
+    throw new Error(errorCodes.CLIENT.CLIENT_02);
   }
 
   let data = await db_get_user_data(verify.email);
-  if (data == null) {
-    throw new Error("SERVER_ERROR");
-  }
-
   let accessToken = jwt.sign({ data: data.id }, process.env.JWT_SECRET_KEY, {
     expiresIn: "2h",
   });
@@ -133,10 +132,13 @@ export const login = async (user_data) => {
 };
 
 export const changeAboutMe = async (user_data) => {
+  const token = user_data.token.split(" ")[1];
+  const user = jwt.verify(token, process.env.JWT_SECRET_KEY);
   try {
-    await db_change_about_me(user_data.id, user_data.about_me);
+    await db_change_about_me(user.data, user_data.about_me);
   } catch (error) {
-    throw new Error(`Server Error: ${error.message}`);
+    console.log(error.message);
+    throw new Error(errorCodes.SERVER.SERVER_03);
   }
 };
 

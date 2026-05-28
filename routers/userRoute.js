@@ -22,7 +22,7 @@ const user = express.Router();
 
 user.post("/auth/signup", authorization, registerUser);
 user.post("/login", loginLimiter, loginUser);
-user.put("/auth/change-about-me/:id", authorization, changeAboutUser);
+user.put("/auth/change-about-me/", authorization, changeAboutUser);
 user.post("/auth/post-activity", authorization, addUserActivity);
 user.get("/auth/get-activities/:email", authorization, getUserActivity);
 user.delete(

@@ -67,32 +67,16 @@ export const loginUser = async (req, res) => {
       .status(200)
       .json({ message: user_data.data, token: user_data.token, status: 200 });
   } catch (error) {
-    switch (error.message) {
-      case "INVALID_EMAIL_PASSWORD":
-        return res
-          .status(400)
-          .json({ message: "Invalid email or password", status: 400 });
-        break;
-      case "SERVER_ERROR":
-        return res.status(500).json({
-          message: "Server Error: User data not retrieved",
-          status: 500,
-        });
-        break;
-      default:
-        return res
-          .status(500)
-          .json({ message: `Server Error:${error.message}`, status: 500 });
-    }
+    return res.status(500).json({ message: error.message, status: 500 });
   }
 };
 
 export const changeAboutUser = async (req, res) => {
   let data = req.body;
-  let id = req.params.id;
+  const token = req.headers.authorization;
   try {
     let response = await changeAboutMe({
-      id: id,
+      token: token,
       about_me: data.about_me,
     });
     return res
