@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
-import { emailApi } from "../config/mailer_config.js";
+import { emailApi, sendMessage } from "../config/mailer_config.js";
 import {
   db_add_user,
   db_change_about_me,
@@ -58,29 +58,11 @@ export const sendToken = async (email) => {
       process.env.JWT_SECRET_KEY,
       { expiresIn: "10m" },
     );
-
-    const message = {
-      sender: {
-        name: "Team Hakbang",
-        email: "hakbangapp@gmail.com",
-      },
-      to: [{ email: email }],
-      subject: "Account Verification",
-      htmlContent: `
-        <h1>Hakbang Account Verification</h1>
-        <p>Your code is:</p>
-        <h2>${code}</h2>
-
-        <p>If you didn’t ask for this code, you can ignore this email or check
-           your account for actions.
-
-           Thanks,</p>
-    `,
-    };
-    emailApi.sendTransacEmail(message);
+    const messageData = sendMessage(email, code);
+    const message = emailApi.sendTransacEmail(messageData);
 
     return token;
-  } catch (err) {
+  } catch (error) {
     console.log(error.message);
     throw errorCodes.SERVER.SERVER_02;
   }
@@ -90,7 +72,7 @@ export const verifyToken = async (user_data) => {
   let verify = jwt.verify(user_data["token"], process.env.JWT_SECRET_KEY);
 
   if (verify == null) {
-    throw new Error(errorCodes.VERIFICATION.VERI_01);
+    throw errorCodes.VERIFICATION.VERI_01;
   }
 
   if (verify.code != user_data["code"]) {
