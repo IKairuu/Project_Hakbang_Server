@@ -180,7 +180,7 @@ export const postSavedScholarship = async (scholarship_id, token) => {
   try {
     await db_post_saved_scholarship(scholarship_id, user.data);
   } catch (error) {
-    throw new Error(`Server Error: ${error.message}`);
+    throw new Error(errorCodes.SERVER.SERVER_07);
   }
 };
 
