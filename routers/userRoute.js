@@ -43,7 +43,11 @@ user.post(
 );
 user.get("/auth/get-saved-schools", authorization, getUserSavedSchools);
 user.post("/auth/post-saved-schools", authorization, postUserSavedSchools);
-user.post("/auth/remove-saved-school", authorization, removeUserSavedSchool);
+user.delete(
+  "/auth/remove-saved-school/:school_id",
+  authorization,
+  removeUserSavedSchool,
+);
 user.post("/auth-user-email/:email", sendCodeUser);
 user.post("/verify", verifyUser);
 

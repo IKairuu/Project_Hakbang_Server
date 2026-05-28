@@ -208,9 +208,11 @@ export const postSavedSchools = async (school_id, token) => {
   }
 };
 
-export const removeSavedSchool = async (school_data) => {
+export const removeSavedSchool = async (school_id, token) => {
+  const filteredToken = token.split(" ")[1];
+  const user = jwt.verify(filteredToken, process.env.JWT_SECRET_KEY);
   try {
-    await db_remove_saved_school(school_data);
+    await db_remove_saved_school(school_id, user.data);
   } catch (error) {
     throw new Error(`Server Error: ${error.message}`);
   }

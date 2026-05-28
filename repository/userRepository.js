@@ -132,20 +132,8 @@ export async function db_post_saved_schools(school_id, id) {
   });
 }
 
-export async function db_remove_saved_school(school_data) {
-  try {
-    const querySnapshot = await getDocs(collection(database, "saved_schools"));
-    for (const documents of querySnapshot.docs) {
-      let document_id = documents.id;
-      let saved = documents.data();
-      if (
-        school_data.email == saved.email &&
-        school_data.college_name == saved.college_name
-      ) {
-        await deleteDoc(doc(database, "saved_schools", document_id));
-      }
-    }
-  } catch (error) {
-    throw new Error(`Database Error: ${error.message}`);
-  }
+export async function db_remove_saved_school(school_id, id) {
+  await prisma.savedSchool.deleteMany({
+    where: { college_id: school_id, user_id: id },
+  });
 }

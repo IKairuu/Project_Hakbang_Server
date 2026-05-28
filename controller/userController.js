@@ -190,9 +190,10 @@ export const postUserSavedSchools = async (req, res) => {
 };
 
 export const removeUserSavedSchool = async (req, res) => {
-  let school_data = req.body;
+  let school_id = req.params.school_id;
+  const token = req.headers.authorization;
   try {
-    await removeSavedSchool(school_data);
+    await removeSavedSchool(school_id, token);
     return res
       .status(200)
       .json({ message: "Successfully removed", status: 200 });
