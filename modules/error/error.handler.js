@@ -40,5 +40,9 @@ export const errorCodes = {
       message: "Server Error: Centers not retrieved",
       status: 500,
     },
+    SERVER_12: {
+      message: "Server Error: Scholarships not retrieved",
+      status: 500,
+    },
   },
 };

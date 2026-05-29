@@ -9,6 +9,8 @@ export const scholarshipList = async (req, res) => {
       status: 200,
     });
   } catch (error) {
-    return res.status(500).json({ message: error.message, status: 500 });
+    return res
+      .status(error.status)
+      .json({ message: error.message, status: error.status });
   }
 };
