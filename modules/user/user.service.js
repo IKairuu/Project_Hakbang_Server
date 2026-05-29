@@ -1,7 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import nodemailer from "nodemailer";
-import { emailApi, sendMessage } from "../../config/mailer_config.js";
+import { emailApi, sendMessage } from "../config/mailer.config.js";
 import {
   db_add_user,
   db_change_about_me,
@@ -17,8 +16,8 @@ import {
   db_remove_saved_scholarship,
   db_remove_saved_school,
   db_remove_user_activity,
-} from "./userRepository.js";
-import { errorCodes } from "../../error/errorCodes.js";
+} from "./user.repository.js";
+import { errorCodes } from "../error/error.handler.js";
 
 export const register = async (user_data) => {
   if (
@@ -136,8 +135,10 @@ export const postActivity = async (activity_details, token) => {
   }
 };
 
-export const getActivity = async (id) => {
-  let activities = await db_get_activities(id);
+export const getActivity = async (token) => {
+  const filteredToken = token.split(" ")[1];
+  const user = jwt.verify(filteredToken, process.env.JWT_SECRET_KEY);
+  let activities = await db_get_activities(user.data);
   return activities;
 };
 

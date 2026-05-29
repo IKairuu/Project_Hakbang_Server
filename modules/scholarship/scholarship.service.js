@@ -1,4 +1,4 @@
-import { db_scholarships } from "../repository/scholarRepository.js";
+import { db_scholarships } from "./scholarship.repository.js";
 
 export const getScholarships = async () => {
   let scholarships = await db_scholarships();
