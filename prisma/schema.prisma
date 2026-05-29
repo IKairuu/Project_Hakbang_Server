@@ -1,0 +1,131 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  user
+  admin
+}
+
+model User {
+  id          String @id @default(dbgenerated("gen_random_uuid()")) @db.Text
+  name        String
+  email       String @unique
+  password    String
+  role        Role   @default(user)
+  occupation  String
+  institution String
+  grade       String
+  avatar      String
+  about_me    String
+
+  createdAt         DateTime           @default(now())
+  activities        Activity[]
+  savedSchools      SavedSchool[]
+  savedScholarships SavedScholarship[]
+}
+
+model College {
+  id              String        @id @default(dbgenerated("gen_random_uuid()")) @db.Text
+  college_name    String        @unique
+  type            String
+  about           String
+  address         String
+  college_image   String
+  email           String
+  fb_page         String
+  latitude        Float
+  longitude       Float
+  logo_link       String
+  program_numbers Int
+  program_offered String[]
+  ranking         Int
+  rating          Float
+  tags            String[]
+  telephone       String
+  savedSchools    SavedSchool[]
+}
+
+model Scholarship {
+  id                   String             @id @default(dbgenerated("gen_random_uuid()")) @db.Text
+  scholarship_name     String
+  scholarship_icon     String
+  allowance            String
+  about                String
+  application_steps    String[]
+  application_timeline Json[]
+  benefits             Json[]
+  color                String
+  start_time           DateTime?
+  end_time             DateTime?
+  duration             Int?
+  eligibility          String[]
+  government           Boolean
+  grant_title          Json?
+  min_gwa              Float?
+  organization_name    Json
+  required_documents   String[]
+  service_obligation   Json?
+  tags                 String[]
+  likes                Int                @default(0)
+  website              String
+  savedScholarships    SavedScholarship[]
+}
+
+model Center {
+  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Text
+  title            String   @unique
+  subtitle         String
+  instructor       String
+  managed_by       String
+  about_center     Json
+  program_overview Json
+  offers           String[]
+  coverage         String[]
+  description      String
+  email            String
+  emoji            String
+  exams            String[]
+  location         String
+  modalities       String?
+  current_price    Float
+  last_price       Float?
+  phone            String
+  rating_count     Int      @default(0)
+  rating_num       Float    @default(0.0)
+  website          String
+  beneficiaries    String[]
+}
+
+model Activity {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Text
+  user_id     String
+  date        DateTime @default(now())
+  description String
+  user        User     @relation(fields: [user_id], references: [id])
+}
+
+model SavedSchool {
+  id         String  @id @default(dbgenerated("gen_random_uuid()")) @db.Text
+  user_id    String
+  college_id String
+  user       User    @relation(fields: [user_id], references: [id])
+  college    College @relation(fields: [college_id], references: [id])
+}
+
+model SavedScholarship {
+  id             String      @id @default(dbgenerated("gen_random_uuid()")) @db.Text
+  user_id        String
+  scholarship_id String
+  user           User        @relation(fields: [user_id], references: [id])
+  scholarship    Scholarship @relation(fields: [scholarship_id], references: [id])
+}
