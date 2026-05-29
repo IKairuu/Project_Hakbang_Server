@@ -32,5 +32,9 @@ export const errorCodes = {
       message: "Server Error: Remove saved scholarship failed",
       status: 500,
     },
+    SERVER_10: {
+      message: "Server Error: Schools not retrieved",
+      status: 500,
+    },
   },
 };
