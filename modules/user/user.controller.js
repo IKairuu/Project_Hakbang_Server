@@ -107,7 +107,7 @@ export const addUserActivity = async (req, res) => {
 export const getUserActivity = async (req, res) => {
   const token = req.headers.authorization;
   try {
-    let activities = await getActivity(id, token);
+    let activities = await getActivity(token);
     return res.status(200).json({
       message: "Successfully retrieved activities",
       data: activities,
