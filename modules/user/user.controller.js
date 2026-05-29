@@ -13,7 +13,7 @@ import {
   removeSavedSchool,
   sendToken,
   verifyToken,
-} from "../service/userService.js";
+} from "./user.service.js";
 
 export const registerUser = async (req, res) => {
   let data = req.body;
@@ -105,9 +105,9 @@ export const addUserActivity = async (req, res) => {
 };
 
 export const getUserActivity = async (req, res) => {
-  let id = req.params.id;
+  const token = req.headers.authorization;
   try {
-    let activities = await getActivity(id);
+    let activities = await getActivity(token);
     return res.status(200).json({
       message: "Successfully retrieved activities",
       data: activities,

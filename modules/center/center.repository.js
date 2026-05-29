@@ -1,4 +1,4 @@
-import { prisma } from "../config/database_config.js";
+import { prisma } from "../config/database.config.js";
 
 export async function db_reviewCenter() {
   const hubs = await prisma.center.findMany();
