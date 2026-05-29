@@ -9,6 +9,8 @@ export const centerList = async (req, res) => {
       data: centers,
     });
   } catch (error) {
-    return res.status(500).json({ message: error.message, status: 500 });
+    return res
+      .status(error.status)
+      .json({ message: error.message, status: error.status });
   }
 };

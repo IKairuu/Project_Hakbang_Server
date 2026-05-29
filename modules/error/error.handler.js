@@ -36,5 +36,9 @@ export const errorCodes = {
       message: "Server Error: Schools not retrieved",
       status: 500,
     },
+    SERVER_11: {
+      message: "Server Error: Centers not retrieved",
+      status: 500,
+    },
   },
 };
