@@ -1,4 +1,4 @@
-import { db_college } from "../repository/collegeRepository.js";
+import { db_college } from "../../repository/collegeRepository.js";
 
 export const getColleges = async () => {
   let colleges = await db_college();

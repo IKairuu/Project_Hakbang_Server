@@ -15,7 +15,7 @@ import {
   removeUserSavedSchool,
   sendCodeUser,
   verifyUser,
-} from "../controller/userController.js";
+} from "../../controller/userController.js";
 import { loginLimiter } from "../middleware/limiter.js";
 
 const user = express.Router();

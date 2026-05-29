@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
-import { emailApi, sendMessage } from "../config/mailer_config.js";
+import { emailApi, sendMessage } from "../../config/mailer_config.js";
 import {
   db_add_user,
   db_change_about_me,
@@ -17,8 +17,8 @@ import {
   db_remove_saved_scholarship,
   db_remove_saved_school,
   db_remove_user_activity,
-} from "../repository/userRepository.js";
-import { errorCodes } from "../error/errorCodes.js";
+} from "./userRepository.js";
+import { errorCodes } from "../../error/errorCodes.js";
 
 export const register = async (user_data) => {
   if (
