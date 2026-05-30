@@ -1,5 +1,9 @@
-import { PrismaClient } from "@prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
+import pkg from "@prisma/client";
+const { PrismaClient } = pkg;
+
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const { PrismaPg } = require("@prisma/adapter-pg");
 import dotenv from "dotenv";
 dotenv.config();
 
