@@ -126,7 +126,11 @@ export const changeAboutMe = async (user_data) => {
 export const postActivity = async (activity_details, token) => {
   const filteredToken = token.split(" ")[1];
   const user = jwt.verify(filteredToken, process.env.JWT_SECRET_KEY);
-  let data = { id: user.data, description: activity_details.description };
+  let data = {
+    id: user.data,
+    description: activity_details.description,
+    icon_name: activity_details.icon_name,
+  };
   try {
     await db_post_activity(data);
   } catch (error) {

@@ -110,6 +110,7 @@ model Activity {
   id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Text
   user_id     String
   date        DateTime @default(now())
+  icon_name   String
   description String
   user        User     @relation(fields: [user_id], references: [id])
 }

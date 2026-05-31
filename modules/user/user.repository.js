@@ -44,14 +44,18 @@ export async function db_change_about_me(id, new_about_me) {
 
 export async function db_post_activity(activity) {
   const post = await prisma.activity.create({
-    data: { user_id: activity.id, description: activity.description },
+    data: {
+      user_id: activity.id,
+      description: activity.description,
+      icon_name: activity.icon_name,
+    },
   });
 }
 
 export async function db_get_activities(id) {
   const activities = await prisma.activity.findMany({
     where: { user_id: id },
-    select: { date: true, description: true },
+    select: { date: true, description: true, icon_name: true },
   });
   return activities;
 }
